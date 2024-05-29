@@ -1,0 +1,30 @@
+
+.mosaic {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 4px;
+    justify-content: space-between;
+    justify-content: space-around;
+}
+  
+.card img {
+    background-color: #f2f2f0;
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 26vw;
+}
+
+@media screen and (max-width: 800px) {
+.mosaic {
+    flex: 50%;
+    max-width: 50%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+.mosaic {
+    flex: 100%;
+    max-width: 100%;
+    }
+}
