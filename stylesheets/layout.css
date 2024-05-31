@@ -1,3 +1,44 @@
+* {
+    background-color: #FCFAF9;
+}
+
+/* header */
+.topnav {
+    display: flex;
+    overflow: hidden;
+    padding: 17px 15px;
+}
+
+.topnav div {
+    float: left;
+    padding-right: 2em;
+    margin: auto;
+}
+
+.topnav div.split {
+    float: right;
+    padding: 0px 20px;
+}
+
+.split a, .split button {
+    padding-right: 1em;
+}
+
+#menu {
+    float: right;
+    padding-right: 3em;
+}
+
+/* page heading */
+.centred {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.centred > h1 {
+    margin-block: auto;
+}
 
 .mosaic {
     display: flex;
@@ -7,28 +48,19 @@
     justify-content: space-between;
     justify-content: space-around;
 }
-  
-img {
-    background-color: #f2f2f0;
-    margin-top: 8px;
-    vertical-align: middle;
-    width: 26vw;
+
+/* product cards */
+section .mosaic {
+    display: flex;
+    flex-wrap: wrap;
+    margin-block: 5%;
+}
+.card {
+    background-color: #FCFAF9;
+    max-width: fit-content;
 }
 
-@media screen and (max-width: 800px) {
-.mosaic {
-    flex: 50%;
-    max-width: 50%;
-    }
-}
-
-@media screen and (max-width: 600px) {
-.mosaic {
-    flex: 100%;
-    max-width: 100%;
-    }
-}
-
+/* breadcrumb navigation */
 /* Style the list */
 ul.breadcrumb {
     padding: 8px 8px;

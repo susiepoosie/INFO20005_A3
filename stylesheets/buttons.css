@@ -1,3 +1,48 @@
+/* normal buttons */
+button {
+    background-color: FCFAF9;
+    padding: 0.7rem 2rem;
+    border-color: #9D968C;
+    border-radius: 30px;
+    border-width: 1px;
+    transition: all 0.3s;
+    cursor: pointer; 
+}
+
+button span {
+    background-color: #FCFAF9;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.3s;
+}
+
+button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -0.7rem;
+    transition: 0.3s;
+}
+
+button:hover span {
+    background-color: #F0EEED;
+    padding-right: 0.7rem;
+}
+
+button:hover {
+    background-color: #F0EEED;
+    border-color: #5C5954;
+    
+}
+  
+button:hover span:after {
+    background-color: #F0EEED;
+    opacity: 1;
+    right: 0;
+}
+
 /* Dropdown Button */
 .dropbtn {
     background-color: #ffffff;

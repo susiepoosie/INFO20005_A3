@@ -1,1 +1,20 @@
-@import url('https://cdn-uicons.flaticon.com/2.3.0/uicons-regular-straight/css/uicons-regular-straight.css')
+/* images */  
+
+img {
+    background-color: #F0EEED;
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 33vw;
+}
+
+img.large {
+    width: 50vw;
+}
+
+img.medium {
+    width: 30vw;
+}
+
+img.small {
+    width: 20vw;
+}

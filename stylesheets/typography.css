@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Caramel&family=Frank+Ruhl+Libre:wght@300..900&display=swap');
+
+* {
+    font-family: 'Frank Ruhl Libre', 'Times New Roman', serif;
+    font-weight: 300;
+    text-decoration: none;
+    color: #3F2C1E;
+}
+
+logo {
+    font-family: 'Caramel', 'Brush Script MT', cursive;
+    font-size: 40px;
+}
+
+h1 {
+    font-weight: 500;
+    font-size: 48px;
+}
+
+h3 {
+    font-weight: 700;
+    font-size: 24px;
+}
+
+button, button span {
+    font-weight: 400;
+    font-size: 18px;
+}
