@@ -1,16 +1,17 @@
 /* normal buttons */
 button {
-    background-color: FCFAF9;
-    padding: 0.7rem 2rem;
+    background-color: inherit;
+    padding: 0.8rem 2rem;
     border-color: #9D968C;
-    border-radius: 30px;
+    border-style: solid;
+    border-radius: 25px;
     border-width: 1px;
     transition: all 0.3s;
     cursor: pointer; 
 }
 
 button span {
-    background-color: #FCFAF9;
+    background-color: inherit;
     cursor: pointer;
     display: inline-block;
     position: relative;
@@ -43,50 +44,115 @@ button:hover span:after {
     right: 0;
 }
 
-/* Dropdown Button */
-.dropbtn {
-    background-color: #ffffff;
-    color: #3F2C1E;
-    padding: 16px;
-    font-size: 16px;
+/* logo button */
+.topnav a > logo {
+    float: left;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+/* dropdown menu button */
+.dropdown {
+    float: left;
+    overflow: hidden;
+    background-color: #fffdfdc4;
+}
+
+.dropdown .dropbtn {
+    background-color: #fffdfdc4;
+    font: inherit;
     border: none;
+    border-radius: 0;
+    outline: none;
+    padding: 14px 16px;
+    margin: 0;
+    font-size: 16px;
     cursor: pointer;
 }
   
-/* Dropdown button on hover & focus */
-.dropbtn:hover, .dropbtn:focus {
-    background-color: #F2F2F0;
+.dropdown button:hover, .dropbtn:focus {
+    text-decoration: underline;
 }
   
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+/* dropdown menu container and contents */
   
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    position: relative;
+    background-color: #fffdfdc4;
+    min-width: 15vw;
     z-index: 1;
 }
   
-/* Links inside the dropdown */
 .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
+    float: none;
+    background-color: inherit;
+    padding: 20px 10px 15px 15px;
     text-decoration: none;
     display: block;
+    text-align: left;
 }
   
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {text-decoration: underline;}
+
+.dropdown:hover .dropdown-content {display: block;}
   
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+/* show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
+
+/* search bar buttons */
+.search {
+    float: left;
+    display: flex;
+    align-items: center;
+}
+
+.search button {
+    color: #5C5954;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    display: inline;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.search input[type=text] {
+    padding: 6px;
+    margin-left: 8px;
+    border: none;
+}
+
+.input {
+    background-color: #fffdfdc4;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    width: 33vw;
+    transition: width 0.3s ease;
+}
+
+.input::placeholder {
+    color: #9D968C;
+}
+
+/* split menu buttons */
+
+.split {
+    float: right;
+    background-color: #fffdfdc4;
+}
+
+.split a, .split button {
+    float: left;
+    display: block;
+    text-align: center;
+    padding-right: 1rem;
+    text-decoration: none;
+}
+
+/* item quantity */
 
 .quantity {
     display: inline-flex;

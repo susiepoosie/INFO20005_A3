@@ -12,6 +12,11 @@ logo {
     font-size: 40px;
 }
 
+#watermark {
+    font-size: 400px;
+    color: #e6e0d7;
+}
+
 h1 {
     font-weight: 500;
     font-size: 48px;

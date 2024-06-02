@@ -1,3 +1,21 @@
+// sticky navbar
+
+window.onscroll = function() {
+  stickyNav();
+};
+
+var navbar = document.getElementById("topnav");
+var sticky = navbar.offsetTop;
+
+function stickyNav() {
+  if (window.scrollY >= sticky) {
+      navbar.classList.add("sticky");
+  } else {
+      navbar.classList.remove("sticky");
+  }
+}
+
+// toggle open headings
 function toggleOpen() {
     var x = document.getElementById("desc");
     if (x.style.display === "none") {
@@ -15,6 +33,7 @@ function toggleOpen2() {
     }
   }
 
+// product quantity toggle
 (function () {
   const quantityContainer = document.querySelector(".quantity");
   const minusBtn = quantityContainer.querySelector(".minus");

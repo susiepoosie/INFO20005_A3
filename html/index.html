@@ -11,22 +11,35 @@
     <link rel="stylesheet" href="../stylesheets/buttons.css">
     <link rel="stylesheet" href="../stylesheets/typography.css">
     <link rel="stylesheet" href="../stylesheets/visuals.css">
+    <script src="../scripts/script.js"></script>
 </head>
 <body>
-    <div class="topnav">
+    <div id="topnav" class="topnav">
         <!-- company logo -->
-        <div> <a href="landing.html"> <logo>AWL</logo></a></div>
-        <!-- search bar -->
-        <div id="search" class="search">
-            <button type="submit"><i class="fi fi-rs-search"></i></button>
-            <input type="text" placeholder="Search.." id="myInput">
-            <button onclick="document.getElementById('myInput').value = ''"><i class="fi fi-rs-cross-small"></i></button>
+        <a href="index.html"> <logo>AWL</logo></a>
+
+        <!-- dropdown menu -->
+        <div class="dropdown">
+            <button class="dropbtn">MENU +</button>
+            <div class="dropdown-content">
+                <a href="#">About +</a>
+                <a href="browse-all.html">Shop +</a>
+                <a href="#">Contact Us</a>
+                <a href="#">My Account</a>
+            </div>
         </div>
+
+        <!-- search bar -->
+        <div class="search">
+            <button class="magnify"> <i class="fi fi-rs-search"></i></button>
+            <input class="input" type="type" placeholder="Search.." id="searchInput">
+            <button class="clear" onclick="document.getElementById('searchInput').value = ''"><i class="fi fi-rs-cross-small"></i></button>
+        </div>
+
         <!-- nav buttons -->
         <div class="split">
-            <a href="#">MENU +</a>
-            <a href="#"><i class="fi fi-rs-heart"></i></a>
-            <a href="cart.html"><i class="fi fi-rs-shopping-cart"></i></a>  
+            <a href="#"><i class="fi fi-rs-heart"></i>Wishlist</a>
+            <a href="cart.html"><i class="fi fi-rs-shopping-cart"></i>Cart</a>  
         </div>
     </div>
 
@@ -81,34 +94,52 @@
             <button> <span>Contact Us</span></button>
         </div>
     </section>
-    <section> <h1>STEP INSIDE</h1></section>
-    <section>
+
+    <!-- contact us -->
+    <div class="contact">
         <h1>TALK TO US</h1>
         <form>
-            <label for="name">Name*</label><br>
-            <input type="text" placeholder="Full name" required><br>
-            <label for="phone">Contact Number</label><br>
-            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}"><br>
-            <label for="email">Email*</label><br>
-            <input type="email" placeholder="youremail@mail.com" required><br>
-            <label for="title">Subject*</label><br>
-            <input type="text" placeholder="Message Title" required><br>
-            <label for="message">Your message*</label><br>
-            <textarea id="message" name="w3review" rows="4" cols="50" placeholder="Start typing your message" required></textarea><br>
-            <input type="submit" value="Submit">
+            <div>
+                <label>Name *</label><br>
+                <input type="text" required><br>
+            </div>
+            <div class="column">
+                <label>Contact Number</label><br>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}"><br>
+            </div>
+            <div class="column">
+                <label>Email *</label><br>
+                <input type="email" required><br>
+            </div>
+            <div>
+                <label>Subject *</label><br>
+                <input type="text" placeholder="Message Title" required><br>
+            </div>
+            <div>
+                <label>Your message *</label><br>
+                <textarea id="message" rows="7" cols="100" placeholder="Start typing your message" required></textarea><br>
+            </div> 
         </form>
-    </section>
-    <div class="footer">
-        <h3>QUICK LINKS</h3>
-        <a href="landing.html">Home</a><br>
-        <a>About</a><br>
-        <a href="browse-all.html">Shop</a><br>
-        <a>Wishlist</a><br>
-        <a>My Account</a><br>
-        <h3>CONTACT US</h3>
-        <a><i class="fi fi-ss-phone-call"></i> (02) 6655 2260</a><br>
-        <a><i class="fi fi-ss-envelope"></i> awlbruce1@gmail.com</a><br>
-        <a><i class="fi fi-ss-marker"></i> 54 Hyde St, Bellingen <br> NSW 2454, Australia</a>
+        <button id="submit" type="submit" value="Submit">Submit</button>
     </div>
+
+    <logo id="watermark">AWL</logo>
+    <div class="footer">
+        <div class="column" id="links">
+            <h3>QUICK LINKS</h3>
+            <a href="index.html">Home</a><br>
+            <a href="#">About</a><br>
+            <a href="browse-all.html">Shop</a><br>
+            <a href="#">Wishlist</a><br>
+            <a href="#">My Account</a><br>
+        </div>
+       <div class="column">
+            <h3>CONTACT US</h3>
+            <p><i class="fi fi-ss-phone-call"></i> (02) 6655 2260</p>
+            <p><i class="fi fi-ss-envelope"></i> awlbruce1@gmail.com</p>
+            <p><i class="fi fi-ss-marker"></i> 54 Hyde St, Bellingen NSW, Australia 2454</p>
+       </div>
+    </div>
+    
 </body>
 </html>
