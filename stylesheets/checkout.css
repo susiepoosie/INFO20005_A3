@@ -1,0 +1,180 @@
+body {
+    font-family: 'Frank Ruhl Libre', 'Times New Roman', serif;
+    font-weight: 300;
+    color: #3F2C1E;
+}
+
+.logo {
+    font-family: 'Caramel', 'Brush Script MT', cursive;
+    font-size: 40px;
+}
+
+#check-out-content-container{
+    display: flex;
+    /*align-items: center;*/
+    /*padding: 10px;*/
+    /*flex-wrap: wrap;*/
+
+    #continue-shopping-button {
+        flex: 0 0 20%
+    }
+
+    #checkout-form {
+        flex: 0 0 60%
+    }
+
+    #check-out-summary {
+        flex: 0 0 20%
+    }
+}
+
+.centred {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    font-size: 25px;
+    color: #757575;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.checkout-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+}
+
+
+.checkout-form {
+    flex: 2;
+    padding-right: 20px;
+}
+
+.checkout-form h2 {
+    font-weight: 700;
+    font-size: 30px;
+    color: #3F2C1E;
+}
+
+.checkout-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #3F2C1E;
+}
+
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.checkbox-group {
+    margin-top: 15px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.cart-summary {
+    flex: 1;
+    padding-left: 20px;
+    text-align: left;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.cart-summary h2 {
+    font-weight: 700;
+    font-size: 25px;
+    color: #3F2C1E;
+}
+
+.total-price {
+    font-size: 18px;
+    color: #3F2C1E;
+    margin-top: 10px;
+}
+
+.cart-summary p {
+    color: #3F2C1E;
+}
+
+.checkout-button {
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.checkout-button:hover {
+    background-color: #555;
+}
+
+.centred {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px; /* Ensure it aligns with back button */
+}
+
+.step-number {
+    background-color: #3F2C1E;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.step-number-inactive {
+    background-color: #fff;
+    color: #3F2C1E;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #3F2C1E;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+
+
