@@ -1,0 +1,438 @@
+@import url('https://fonts.googleapis.com/css2?family=Caramel&family=Frank+Ruhl+Libre:wght@300..900&display=swap');
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+logo {
+    font-family: 'Caramel', 'Brush Script MT', cursive;
+    font-size: 40px;
+}
+
+* {
+    font-family: 'Frank Ruhl Libre', 'Times New Roman', serif;
+    font-weight: 300;
+    text-decoration: none;
+    color: #3F2C1E;
+    /*font-size: 30px;*/
+}
+
+#cart-head-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    flex-wrap: wrap; /* Allows items to wrap to the next line */
+
+    #continue-shopping-button,
+    #blank-section-right {
+        flex: 1;
+        min-width: 0; /* Ensures the sections can shrink properly */
+    }
+
+    #cart-title-container {
+        flex: 2;
+        text-align: center;
+        min-width: 0; /* Ensures the section can shrink properly */
+
+        #car-title-text {
+            font-size: 30px;
+        }
+
+    }
+
+    #free-shipping-progress-container {
+        margin-top: 10px;
+    }
+
+    #free-shipping-progress-content p {
+        margin: 0;
+    }
+}
+
+
+
+#cart-container {
+    width: 95%;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .cart-items {
+        flex: 1 1 75%;
+        margin-right: 20px;
+
+
+        /* Styles for the cart header to align with cart item sections */
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            font-size: 25px;
+
+            .product-header {
+                flex: 0 0 60%;  /* Allocates 60% width */
+                text-align: left;
+            }
+
+            .quantity-header {
+                flex: 0 0 20%;  /* Allocates 20% width */
+                text-align: center;
+            }
+
+            .subtotal-header {
+                flex: 0 0 20%;  /* Allocates 20% width */
+                text-align: center;
+            }
+        }
+
+        /* Styles for each cart item */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+
+            .product-detail {
+                flex: 0 0 60%;  /* Matches the product header width */
+                display: flex;
+                justify-content: flex-start;
+
+                /* Flexbox setup for the product-detail section */
+
+                .product-img {
+                    flex: 0 0 30%;
+                    margin-top: 0;
+                    max-width: 20%;
+                    height: auto;
+                }
+
+                .product-title {
+                    padding-left: 5px;
+                    flex: 0 0 50%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    .product-name {
+                        margin-top: 10%;
+                        font-size: 20px;
+                        font-weight: 1000;
+                    }
+                }
+
+                .product-color-and-size-container {
+                    flex: 0 0 30%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    font-size: 20px;
+                }
+            }
+
+            .quantity-controls {
+                flex: 0 0 20%;  /* Matches the quantity header width */
+                display: flex;
+                align-items: center;
+                justify-content: center; /* Centers the content */
+            }
+
+            .quantity-btn {
+                background-color: #ddd;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+            }
+
+            .quantity-btn:hover {
+                background-color: #ccc;
+            }
+
+            .quantity-btn.minus {
+                margin-right: 10px;
+                width: 40px;
+                height: 40px;
+                background-color: transparent;
+                border: none;
+                font-size: 45px;
+                color: #757575;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start; /* 让 - 号靠顶部 */
+                line-height: 25px; /* 调整行高来控制 - 号的垂直位置 */
+            }
+
+            .quantity-btn.plus {
+                margin-left: 10px;
+                width: 40px;
+                height: 40px;
+                background-color: transparent;
+                border: none;
+                font-size: 45px;
+                color: #757575;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                line-height: 40px;
+            }
+
+            .product-subtotal {
+                flex: 0 0 20%;  /* Matches the subtotal header width */
+                text-align: center;
+                font-size: 20px;
+            }
+        }
+        /*.quantity-btn {*/
+        /*    padding: 5px 10px;*/
+        /*    margin: 0 5px;*/
+        /*    width: 40px;*/
+        /*    height: 40px;*/
+        /*    background-color: transparent;*/
+        /*    border: none;*/
+        /*    font-size: 30px;*/
+        /*    color: #757575;*/
+        /*    cursor: pointer;*/
+        /*    display: flex;*/
+        /*    justify-content: center;*/
+        /*    align-items: flex-start; !* 让 - 号靠顶部 *!*/
+        /*    line-height: 25px;*/
+        /*}*/
+
+        .quantity-controls input[type="text"] {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font-size: 20px;
+        }
+    }
+
+    .cart-summary {
+        flex: 1 1 auto;
+        margin-left: 20px;
+        text-align: left;
+        background-color: #f5f5f5;
+        box-shadow: 0 0 0 0 #f5f5f5;
+        border-radius: 10px;
+        height: 300px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+
+        padding-top:30px;
+        padding-bottom:20px;
+
+        * {
+            background-color: inherit;
+        }
+
+        #cart-summary-information {
+            padding-left: 20px;
+            h2 {
+                font-size: 20px;
+                font-weight: 1000;
+            }
+
+            .cart-total-price {
+                font-size: 30px;
+                font-weight: 1000;
+                margin-right: 20px;
+            }
+
+            .tax-shipping {
+                font-size: 15px;
+                color: #757575;
+            }
+        }
+
+        #cart-summary-checkout-button{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                margin-top: 0;
+                margin-right: 10px;
+                width: 24px; /* Adjust width if necessary */
+                height: 24px; /* Adjust height if necessary */
+                display: inline-block; /* Ensure the image is treated as inline-block */
+                vertical-align: middle;
+            }
+
+            * {
+                background-color: transparent;
+            }
+        }
+    }
+
+
+
+}
+
+
+
+
+
+
+/*.centred {*/
+/*    text-align: center;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+.back-button {
+    font-size: 20px;
+    color: #757575;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+/*.cart-item {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*    margin-bottom: 20px;*/
+/*    padding-bottom: 20px;*/
+/*    border-bottom: 1px solid #ccc;*/
+/*}*/
+
+
+/*!*.product-details img {*!*/
+/*!*    max-width: 100px;*!*/
+/*!*    margin-right: 20px;*!*/
+/*!*}*!*/
+
+/*.quantity-controls {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+
+
+/*.quantity-controls input[type="text"] {*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    text-align: center;*/
+/*    border: 1px solid #ddd;*/
+/*    border-left: none;*/
+/*    border-right: none;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    font-size: 18px;*/
+/*    line-height: 40px;*/
+/*}*/
+
+
+.quantity-controls input[type="text"] {
+
+}
+
+/*.total-price {*/
+/*    font-size: 40px;*/
+/*    font-weight: bold;*/
+/*    margin-top: 10px;*/
+/*}*/
+
+
+/*.cart-header {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    padding: 10px 0;*/
+/*    border-bottom: 1px solid #ccc;*/
+/*    margin-bottom: 10px;*/
+/*    width: 80%; !* Ensure the header spans the full width of its container *!*/
+/*    box-sizing: border-box*/
+/*}*/
+
+/*.product-header {*/
+/*    flex: 1.6;*/
+/*    text-align: left;*/
+/*    font-weight: 500;*/
+/*    font-size: 30px;*/
+/*    color: #757575;*/
+/*}*/
+
+/*.quantity-header {*/
+/*    flex: 1;*/
+/*    text-align: center;*/
+/*    font-weight: 500;*/
+/*    font-size: 30px;*/
+/*    color: #757575;*/
+/*}*/
+
+/*.subtotal-header {*/
+/*    flex: 1;*/
+/*    text-align: right;*/
+/*    font-weight: 500;*/
+/*    font-size: 30px;*/
+/*    color: #757575;*/
+/*}*/
+
+/*.tax-shipping {*/
+/*    font-size: 15px;*/
+/*    color: #757575;*/
+/*    margin-top: 10px;*/
+/*    font-style: italic;*/
+/*}*/
+
+/*.checkout-button {*/
+/*    font-size: 30px;*/
+/*    color: #333333;*/
+/*    background-color: white;*/
+/*    border: 2px solid #000;*/
+/*    padding: 15px 30px;*/
+/*    cursor: pointer;*/
+/*    border-radius: 5px;*/
+/*    transition: background-color 0.3s ease;*/
+/*    width: 100%;*/
+/*    text-align: center;*/
+/*    display: inline-block;*/
+/*    margin-top: 70px;*/
+/*    border-radius: 20px;*/
+/*}*/
+
+/*.checkout-button:hover {*/
+/*    background-color: #333;*/
+/*}*/
+
+
+
+
+
+/*logo {*/
+/*    font-family: 'Caramel', 'Brush Script MT', cursive;*/
+/*    font-size: 40px;*/
+/*}*/
+
+/*#watermark {*/
+/*    font-size: 400px;*/
+/*    color: #e6e0d7;*/
+/*}*/
+
+/*h1 {*/
+/*    font-weight: 500;*/
+/*    font-size: 48px;*/
+/*}*/
+
+/*h3 {*/
+/*    font-weight: 700;*/
+/*    font-size: 24px;*/
+/*}*/
+
+/*button, button span {*/
+/*    font-weight: 400;*/
+/*    font-size: 18px;*/
+/*}*/

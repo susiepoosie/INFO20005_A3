@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | AWL Leather</title>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+    <link rel="stylesheet" href="../stylesheets/layout.css">
+    <link rel="stylesheet" href="../stylesheets/buttons.css">
+    <link rel="stylesheet" href="../stylesheets/checkout-shipping.css">
+    <link rel="icon" type="image/x-icon" href="../images/awl_favicon.png">
+    <link rel="stylesheet" href="../stylesheets/typography.css">
+    <link rel="stylesheet" href="../stylesheets/visuals.css">
+</head>
+<body>
+<div class="header">
+    <div id="topnav" class="topnav">
+        <a href="index.html"> <logo>AWL</logo></a>
+        <div class="dropdown">
+            <button class="dropbtn">MENU +</button>
+            <div class="dropdown-content">
+                <a href="#">About +</a>
+                <a href="browse-all.html">Shop +</a>
+                <a href="#">Contact Us</a>
+                <a href="#">My Account</a>
+            </div>
+        </div>
+        <div class="split">
+            <a href="#"><i class="fi fi-rs-heart"></i>Wishlist</a>
+            <a href="cart.html"><i class="fi fi-rs-shopping-cart"></i>Cart</a>
+        </div>
+    </div>
+</div>
+<div id="checkout-shipping-title">CHECKOUT</div>
+<div id="checkout-shipping-item-count">MY CART: 2 items</div>
+<div id="checkout-shipping-content-container">
+    <div id="continue-shopping-button">
+        <button class="back-button" onclick="navToCartPage()">
+            <i class="fi fi-ss-direction"></i>< Back to Cart
+        </button>
+    </div>
+
+
+    <div id="checkout-shipping-form">
+        <div id="checkout-shipping-form-title-container">
+            <div class="checkout-step-circle">1</div>
+            <div id="checkout-shipping-form-title">Shipping</div>
+            <div class="checkout-step-circle checkout-step-circle-inactive">2</div>
+            <div class="checkout-step-circle checkout-step-circle-inactive">3</div>
+        </div>
+        <div class="shipping-plain-input-group">
+            <label for="name">Name*</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-same-line-group">
+            <div class="input-half">
+                <label for="email">Email*</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-half">
+                <label for="mobile">Mobile*</label>
+                <input type="tel" id="mobile" name="mobile" required>
+            </div>
+        </div>
+
+        <div class="shipping-plain-input-group">
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I have read and agree with the Terms & Conditions</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="updates" name="updates">
+                <label for="updates">I would like to receive email updates with special offers, promotions, new products and alerts for restocked items</label>
+            </div>
+        </div>
+
+        <div class="shipping-plain-input-group">
+            <label for="address">Shipping Address*</label>
+            <input type="text" id="address" name="address" required>
+        </div>
+        <div class="form-same-line-group">
+            <div class="input-half">
+                <label for="suburb">Suburb*</label>
+                <input type="text" id="suburb" name="suburb" required>
+            </div>
+            <div class="input-half">
+                <label for="country">Country / Region*</label>
+                <input type="text" id="country" name="country" required>
+            </div>
+        </div>
+        <div class="shipping-plain-input-group">
+            <label for="postcode">Postcode*</label>
+            <input type="text" id="postcode" name="postcode" required>
+        </div>
+
+        <button id="place-order-button" onclick="navToCheckoutPaymentPage()">
+            <img src="../images/locker.svg" alt="Locker Icon">
+            <span>Ready to Pay</span>
+        </button>
+
+    </div>
+
+    <div id="checkout-summary">
+        <h2>SATCHEL BAG</h2>
+        <div class="sub-fees-container">
+            <span class="sub-total-price-text">Sub-total</span>
+            <span class="sub-total-price-number">$290</span>
+        </div>
+        <div class="sub-fees-container">
+            <span class="shipping-fee-text">Shipping Fee</span>
+            <span class="shipping-fee-number">$0</span>
+        </div>
+        <div id="free-shipping-message">You’ve got <strong>FREE SHIPPING!</strong></div>
+        <div id="shipping-total-price-container">
+            <span class="total-price-text">Total</span>
+            <span class="total-price-number">$290</span>
+        </div>
+    </div>
+</div>
+<script src="../scripts/checkoout-shipping.js"></script>
+</body>
+</html>
