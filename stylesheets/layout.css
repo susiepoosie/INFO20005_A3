@@ -154,7 +154,7 @@ form > input::placeholder {
 }
 
 form div {
-    overflow: -moz-hidden-unscrollable;
+    overflow: hidden;
     margin: 0 0 1rem 0;
 }
 
@@ -179,10 +179,27 @@ section .mosaic {
     flex-wrap: wrap;
     margin-block: 5%;
 }
+
 .card {
     position: relative;
     background-color: #fffdfd;
     max-width: fit-content;
+}
+
+@media screen and (max-width: 899px) {
+    .mosaic {
+        display: grid;
+        column-gap: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        grid-template-columns: 50% 50%;
+    }
+    .column1 {
+        grid-area: 1 / 1 / 2 / 2;
+    }
+    .column2 {
+        grid-area: 1 / 2 / 2 / 3;
+    }
 }
 
 /* product page grid */

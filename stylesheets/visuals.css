@@ -33,6 +33,12 @@ img.small {
     width: 20vw;
 }
 
+@media screen and (max-width: 1200px) {
+    img.large {width: 40vw;}
+    img.medium {width: 40vw;}
+    img.small {width: 40vw;}
+}
+
 .card {
     max-width: fit-content;
     margin: 1vw;
