@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Caramel&family=Frank+Ruhl+Libre:wght@300..900&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Frank Ruhl Libre', 'Times New Roman', serif;
+    font-weight: 300;
+    color: #3F2C1E;
+}
+
+#checkout-payment-title {
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#checkout-payment-item-count {
+    height: 30px;
+    font-size: 15px;
+    text-align: center;
+    align-content: center;
+    background-color: #d5c0a2;
+}
+
+#checkout-payment-content-container{
+    display: flex;
+    width: 95%;
+    margin: 0 auto;
+    padding: 20px;
+    /*gap: 10px;*/
+    /*align-items: center;*/
+    /*padding: 10px;*/
+    /*flex-wrap: wrap;*/
+
+    #continue-shopping-button {
+        flex: 1 1 25%
+    }
+
+    #checkout-payment-form {
+        flex: 1 1 50%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+
+        #checkout-payment-form-title-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        #checkout-payment-form-title {
+            align-content: center;
+            font-size: 40px;
+            font-weight: 500;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .checkout-step-circle{
+            width: 50px;
+            height: 50px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #b28b51;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 30px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .checkout-step-circle-inactive {
+            opacity: 0.3;
+        }
+
+
+        #checkout-payment-credit-card-container {
+            margin-top: 20px;
+            border: 1px solid #7C633EB5;
+            border-radius: 10px;
+            background-color: #F1E8DACC;
+            padding: 30px;
+
+            #credit-card-title {
+                background-color: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 10px;
+                /*margin-top: 10px;*/
+                /*max-width: 100%; !* Ensure the checkbox group doesn't exceed the width *!*/
+                input {
+                    flex: 0 0 1%;
+                    overflow-wrap: break-word;
+                    /* Ensure the label text wraps within the container */
+                }
+
+                * {
+                    background-color: transparent;
+                }
+            }
+
+            .form-same-line-group {
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+                flex-wrap: wrap;
+
+                .input-half {
+                    flex: 1 1 45%;
+                }
+            }
+
+            .payment-plain-input-group, .form-same-line-group {
+                margin-top: 20px;
+                background-color: transparent;
+                input {
+                    padding: 10px;
+                    /*margin-top: 5px;*/
+                    border: 1px solid #B9B5AFB5;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                    width: 100%;
+                    background-color: #EFECE8FF;
+                }
+            }
+        }
+
+        #checkout-payment-other-payment-container {
+            margin-top: 20px;
+
+            border: 1px solid #7C633EB5;
+            border-radius: 12px;
+            background-color: #F1E8DACC;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 20px;
+
+            * {
+                background-color: transparent;
+            }
+        }
+
+        #checkout-payment-price-summary {
+            margin-top: 10px;
+            border-radius: 10px;
+            background-color: #EFECE8FF;
+            padding: 15px;
+
+            * {
+                background-color: transparent;
+            }
+
+            #sub-total-price-container {
+                margin-bottom: 10px;
+                display: flex;
+                .display-fees-container {
+                    flex:0 1 40%;
+                    display: flex;
+                    justify-content: space-between;
+                    span {
+                        font-size: 20px;
+                        font-weight: 200;
+                        color: #757575;
+                    }
+                }
+            }
+
+            #shipping-fee-container {
+                display: flex;
+                gap: 10%;
+                .display-fees-container {
+                    flex:0 1 40%;
+                    display: flex;
+                    justify-content: space-between;
+
+                    span {
+                        font-size: 20px;
+                        font-weight: 200;
+                        color: #757575;
+                    }
+                }
+
+                #free-shipping-message {
+                    align-content: center;
+                    strong {
+                        font-size: 15px;
+                        font-weight: 600;
+                    }
+                }
+                margin-bottom: 15px;
+            }
+
+            #shipping-total-price-container {
+                display: flex;
+                flex-direction: row-reverse;
+                .display-fees-container {
+                    flex:0 0 17%;
+                    display: flex;
+                    justify-content: space-between;
+                    span {
+                        font-size: 20px;
+                        font-weight: 800;
+                    }
+                }
+            }
+
+
+        }
+
+        #place-order-button {
+            margin-top: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-radius: 10px;
+            border: 1px solid #7C633EB5;
+            background-color: #F1E8DACC;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                margin-top: 0;
+                margin-right: 10px;
+                width: 24px; /* Adjust width if necessary */
+                height: 24px; /* Adjust height if necessary */
+                display: inline-block; /* Ensure the image is treated as inline-block */
+                vertical-align: middle;
+            }
+
+            * {
+                background-color: transparent;
+            }
+        }
+
+    }
+
+    #check-out-payment-blank {
+        flex: 1 1 25%;
+    }
+}
+
+.back-button {
+    font-size: 25px;
+    color: #757575;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}

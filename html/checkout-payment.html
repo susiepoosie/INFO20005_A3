@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | AWL Leather</title>
+    <link rel='stylesheet'
+          href='https://cdn-uicons.flaticon.com/2.3.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <link rel='stylesheet'
+          href='https://cdn-uicons.flaticon.com/2.3.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+    <link rel="stylesheet" href="../stylesheets/layout.css">
+    <link rel="stylesheet" href="../stylesheets/buttons.css">
+    <link rel="stylesheet" href="../stylesheets/checkout-payment.css">
+    <link rel="icon" type="image/x-icon" href="../images/awl_favicon.png">
+    <link rel="stylesheet" href="../stylesheets/typography.css">
+    <link rel="stylesheet" href="../stylesheets/visuals.css">
+</head>
+<body>
+<div class="header">
+    <div id="topnav" class="topnav">
+        <a href="index.html"> <logo>AWL</logo></a>
+        <div class="dropdown">
+            <button class="dropbtn">MENU +</button>
+            <div class="dropdown-content">
+                <a href="#">About +</a>
+                <a href="browse-all.html">Shop +</a>
+                <a href="#">Contact Us</a>
+                <a href="#">My Account</a>
+            </div>
+        </div>
+        <div class="split">
+            <a href="#"><i class="fi fi-rs-heart"></i>Wishlist</a>
+            <a href="cart.html"><i class="fi fi-rs-shopping-cart"></i>Cart</a>
+        </div>
+    </div>
+</div>
+<div id="checkout-payment-title">CHECKOUT</div>
+<div id="checkout-payment-item-count">MY CART: 2 items</div>
+<div id="checkout-payment-content-container">
+    <div id="continue-shopping-button">
+        <button class="back-button" onclick="navToCartPage()">
+            <i class="fi fi-ss-direction"></i>< Back to Cart
+        </button>
+    </div>
+
+
+    <div id="checkout-payment-form">
+        <div id="checkout-payment-form-title-container">
+            <div class="checkout-step-circle checkout-step-circle-inactive">1</div>
+            <div class="checkout-step-circle">2</div>
+            <div id="checkout-payment-form-title">Payment Detail</div>
+            <div class="checkout-step-circle checkout-step-circle-inactive">3</div>
+        </div>
+
+        <div id="checkout-payment-credit-card-container">
+            <div id="credit-card-title">
+                <label>
+                    <input type="checkbox" id="credit-card-option" name="credit-card" checked>
+                </label>
+                <span>Credit Card</span>
+            </div>
+
+            <div class="payment-plain-input-group">
+                <label>
+                    <input type="text" placeholder="Name on Card">
+                </label>
+            </div>
+            <div class="payment-plain-input-group">
+                <label>
+                    <input type="text" placeholder="Card Number">
+                </label>
+            </div>
+            <div class="form-same-line-group">
+                <div class="input-half">
+                    <label>
+                        <input type="text" placeholder="Expiry Dater">
+                    </label>
+                </div>
+                <div class="input-half">
+                    <label>
+                        <input type="text" placeholder="CVV">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="checkout-payment-other-payment-container">
+            <label>
+                <input type="checkbox" id="other-payment-option" name="other-payment">
+            </label>
+            <span id="other-payment-option-text">Other Payment</span>
+        </div>
+
+        <div id="checkout-payment-price-summary">
+            <div id="sub-total-price-container">
+                <div class="display-fees-container">
+                    <span id="sub-total-price-text">Sub-total</span>
+                    <span id="sub-total-price-number">$290</span>
+                </div>
+                <div id="sub-total-price-blank"></div>
+            </div>
+
+            <div id="shipping-fee-container">
+                <div class="display-fees-container">
+                    <span id="shipping-fee-text">Shipping Fee</span>
+                    <span id="shipping-fee-number">$0</span>
+                </div>
+                <div id="free-shipping-message">You’ve got <strong>FREE SHIPPING!</strong></div>
+            </div>
+
+            <div id="shipping-total-price-container">
+                <div class="display-fees-container">
+                    <span id="total-price-text">Total:</span>
+                    <span id="total-price-number">$290</span>
+                </div>
+            </div>
+        </div>
+
+        <button id="place-order-button" onclick="navToConfirmationPage()">
+            <img src="../images/locker.svg" alt="Locker Icon">
+            <span>Place Order</span>
+
+        </button>
+    </div>
+    <div id="check-out-payment-blank"></div>
+</div>
+<script src="../scripts/checkout-payment.js"></script>
+</body>
+</html>

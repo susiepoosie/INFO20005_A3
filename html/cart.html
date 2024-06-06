@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Shopping Cart | AWL Leather</title>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-regular-straight/css/uicons-regular-straight.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.3.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+    <link rel='stylesheet'
+          href='https://cdn-uicons.flaticon.com/2.3.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <link rel='stylesheet'
+          href='https://cdn-uicons.flaticon.com/2.3.0/uicons-solid-straight/css/uicons-solid-straight.css'>
     <link rel="stylesheet" href="../stylesheets/layout.css">
     <link rel="stylesheet" href="../stylesheets/buttons.css">
     <link rel="stylesheet" href="../stylesheets/cart.css">
@@ -13,29 +15,28 @@
     <link rel="stylesheet" href="../stylesheets/visuals.css">
 </head>
 <body>
-<!--<div class="header">-->
-<!--    <div id="topnav" class="topnav">-->
-<!--        &lt;!&ndash; company logo &ndash;&gt;-->
-<!--        <a href="index.html"> <logo>AWL</logo></a>-->
-
-
-
-<!--        &lt;!&ndash; nav buttons &ndash;&gt;-->
-<!--        <div class="split">-->
-<!--            <a href="#"><i class="fi fi-rs-heart"></i>Wishlist</a>-->
-<!--            <a href="shippingCart.html"><i class="fi fi-rs-shopping-cart"></i>Cart</a>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="centred">-->
-
-
-<!--    </div>-->
-<!--</div>-->
+<div class="header">
+    <div id="topnav" class="topnav">
+        <a href="index.html"> <logo>AWL</logo></a>
+        <div class="dropdown">
+            <button class="dropbtn">MENU +</button>
+            <div class="dropdown-content">
+                <a href="#">About +</a>
+                <a href="browse-all.html">Shop +</a>
+                <a href="#">Contact Us</a>
+                <a href="#">My Account</a>
+            </div>
+        </div>
+        <div class="split">
+            <a href="#"><i class="fi fi-rs-heart"></i>Wishlist</a>
+            <a href="cart.html"><i class="fi fi-rs-shopping-cart"></i>Cart</a>
+        </div>
+    </div>
+</div>
 
 <div id="cart-head-container">
     <div id="continue-shopping-button">
-        <button class="back-button" onclick="history.back()">
+        <button class="back-button" onclick="navToShoppingPage()">
             <i class="fi fi-ss-direction"></i>< Continue shopping
         </button>
     </div>
@@ -53,11 +54,6 @@
     <div id="blank-section-right"></div>
 </div>
 
-
-
-
-
-
 <div id="cart-container">
     <div class="cart-items">
         <div class="cart-header">
@@ -65,43 +61,22 @@
             <div class="quantity-header">Quantity</div>
             <div class="subtotal-header">Subtotal</div>
         </div>
-        <div class="cart-item">
-            <div class="product-detail">
-
-                <img class="product-img" src="../images/Belt_Tip_Brown.png" alt="Brown Tip Belt">
-
-
-                <div class="product-title">
-                    <div class="product-type">Belts</div>
-                    <div class="product-name">TIP BELT</div>
-                </div>
-
-                <div class="product-color-and-size-container">
-                    <div class="product-color">Brown</div>
-                    <div class="product size">34"</div>
-                </div>
-            </div>
-            <div class="quantity-controls">
-                <button class="quantity-btn minus">-</button>
-                <input type="text" value="1" readonly>
-                <button class="quantity-btn plus">+</button>
-            </div>
-            <div class="product-subtotal">
-                <span>$55</span>
-            </div>
-        </div>
+    <!--  render item here  -->
     </div>
     <div class="cart-summary">
         <div id="cart-summary-information">
             <h2>TOTAL</h2>
-            <span class="total-price">$290</span>
+            <span class="cart-total-price">$290</span>
             <span class="tax-shipping">Excl. GST & Shipping</span>
         </div>
         <div id="cart-summary-checkout-button">
-            <button class="checkout-button" onclick="navToCheckoutPage()">Secure Checkout</button>
+            <button class="checkout-button" onclick="navToCheckoutShippingPage()">
+                <img src="../images/locker.svg" alt="Locker Icon">
+                <span>Secure Checkout</span>
+            </button>
         </div>
     </div>
 </div>
-<script src="../scripts/cart.js"></script>
+<script src="../scripts/shopping-cart.js"></script>
 </body>
 </html>
