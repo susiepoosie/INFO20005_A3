@@ -1,10 +1,24 @@
-/* images */  
+/* icons */
+@import url('https://cdn-uicons.flaticon.com/2.4.0/uicons-bold-straight/css/uicons-bold-straight.css');
+@import url('https://cdn-uicons.flaticon.com/2.3.0/uicons-regular-straight/css/uicons-regular-straight.css');
+@import url('https://cdn-uicons.flaticon.com/2.3.0/uicons-solid-straight/css/uicons-solid-straight.css');
 
+i {
+    -webkit-text-fill-color: #3F2C1E;
+}
+
+button i {
+    -webkit-text-fill-color: #9D968C;
+}
+
+button i:hover {
+    -webkit-text-fill-color: #3F2C1E;
+}
+
+/* images */
 img {
     background-color: #F0EEED;
-    margin-top: 8px;
-    vertical-align: middle;
-    width: 33vw;
+    width: 25vw;
 }
 
 img.large {
@@ -17,4 +31,9 @@ img.medium {
 
 img.small {
     width: 20vw;
+}
+
+.card {
+    max-width: fit-content;
+    margin: 1vw;
 }

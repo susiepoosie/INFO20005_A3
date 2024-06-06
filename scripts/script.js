@@ -15,7 +15,12 @@ function stickyNav() {
   }
 }
 
+// search bar suggestions
+
+
+
 // toggle open headings
+
 function toggleOpen() {
     var x = document.getElementById("desc");
     if (x.style.display === "none") {
@@ -34,6 +39,7 @@ function toggleOpen2() {
   }
 
 // product quantity toggle
+
 (function () {
   const quantityContainer = document.querySelector(".quantity");
   const minusBtn = quantityContainer.querySelector(".minus");
