@@ -50,6 +50,55 @@ h1 {
     padding-top: 60px;
 }
 
+@media screen and (max-width: 699px) {
+    .topnav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .topnav .menu-and-buttons {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-bottom: 1em;
+    }
+
+    .topnav .search {
+        width: 50vw;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1em;
+    }
+
+    .topnav .dropdown-content, .topnav .search form .dropdown-content {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        display: none;
+    }
+
+    .topnav .dropdown-content a, .topnav .search form .dropdown-content a {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        text-align: left;
+    }
+
+    .topnav .dropdown:hover .dropdown-content,
+    .topnav .search form:hover .dropdown-content {
+        display: block;
+    }
+
+    .topnav .search input {
+        width: calc(100% - 40px); /* Adjust width to fit within container */
+    }
+
+    .topnav a {
+        width: auto;
+        float: none;
+    }
+}
+
 /* page heading */
 .centred {
     display: flex;
@@ -136,17 +185,77 @@ section .mosaic {
     max-width: fit-content;
 }
 
-.product img {
-    float: left;
-}
-
 /* product page grid */
+@media screen and (min-width: 700px) {
 .grid {
     display: grid;
     gap: 50px;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto auto;
+    grid-template-columns: 15% auto auto;
+    grid-template-rows: 15% auto auto;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
 
+.grid .container img {
+    float: left;
+    grid-area: 1 / span 2 / 2 / span 2;
+}
+
+.grid .product {
+    grid-area: 1 / 3 / 2 / 4;
+}
+
+.grid .toggles {
+    grid-area: 2 / 3 / 3 / 4;
+}
+
+.grid .sidebar {
+    grid-area: 1 / 1 / 4 / 2;
+}
+
+.grid .sidebar img {
+    opacity: 0.8;
+    max-width: 15vw;
+    margin-bottom: 20px;
+    margin-left: 25px;
+    cursor: pointer;
+}
+
+.grid .sidebar img:hover {
+    opacity: 1;
+}
+}
+
+@media screen and (max-width: 699px) {
+    .grid {
+        display: grid;
+        gap: 50px;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto auto;
+        justify-content: flex-start;
+        align-content: flex-start;
+    }
+    
+    .grid .container img {
+        float: left;
+        grid-area: 1 / 1 / 2 / 2;
+    }
+    
+    .grid .product {
+        grid-area: 1 / 2 / 2 / 3;
+    }
+    
+    .grid .toggles {
+        margin-left: 1rem;
+        grid-area: 2 / 1 / 3 / 3;
+    }
+
+    .grid .sidebar {
+        grid-area: 3 / 1 / 4 / 3;
+    }    
+    .sidebar img {
+        min-width: 25vw;
+    }
 }
 
 /* breadcrumb navigation */
@@ -182,13 +291,15 @@ ul.breadcrumb li a:hover {
 
 /* FOOTER */
 .footer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 60vh;
     display: grid;
     z-index: 1;
     background-color: #DBD3C6;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 25% 25% auto;
     padding: 3rem 5rem 10vw 10vw;
-    min-height: 60vh;
-    overflow: -moz-hidden-unscrollable;
 }
 
 .column, .column * {
@@ -200,13 +311,13 @@ ul.breadcrumb li a:hover {
 .column i {padding-right: 1em;}
 
 #watermark {
-    display: flex;
-    overflow: hidden;
-    min-height: 60vh;
-    min-width: 100vw;
+    text-align: right;
+    display: block;
+    right: 0;
+    max-height: 60vh;
+    min-width: 90vw;
     z-index: 0;
     background: #dbd3c600;
-    justify-content: flex-end;
     position: absolute;
     transform: translateY(15vh);
 }

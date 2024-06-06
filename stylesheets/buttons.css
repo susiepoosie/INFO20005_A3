@@ -153,6 +153,7 @@ button:hover span:after {
     transition: width 0.3s ease;
     transform: translateY(7px);
 }
+
 @media screen and (max-width: 699px) {
     .search {
         transform: translateY(20px);
@@ -167,7 +168,7 @@ button:hover span:after {
 }
 
 .search .magnify {
-    transform: translate(0.3rem, 0.1rem)
+    transform: translate(0.3rem, 0.1rem);
 }
 .search .clear {
     float: right;
@@ -197,7 +198,7 @@ button:hover span:after {
 
 /* product card buttons */
 
-.card button {
+.cardbtn {
     display: block;
     position: absolute;
     top: 3%;
@@ -207,6 +208,10 @@ button:hover span:after {
     padding: 13px 16px 8px;
     cursor: pointer;
     border-radius: 25px;
+}
+
+.cardbtn:hover {
+    background-color: inherit;
 }
 
 /* on hover, card buttons change to filled icons */
@@ -225,6 +230,8 @@ button:hover span:after {
 /* product colour/size select buttons */
 .product .dropbtn {
     border: none;
+    text-align: left;
+    padding-left: 0;
 }
 
 .product .dropbtn:hover {
@@ -236,6 +243,37 @@ button:hover span:after {
 .product select {
     border: none;
     font-size: inherit;
+}
+
+/* product page heart button */
+.heading {
+    display: flex;
+}
+.fav {
+    display: block;
+    position: relative;
+    padding-left: 3rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    font-size: 30px;
+}
+
+.fav:hover {
+    background-color: inherit;
+}
+
+/* on hover, card buttons change to filled icons */
+.heading .fav i:nth-child(2) {
+    display: none; 
+}
+  
+.heading > button:hover .fav i:nth-child(1) {
+    display: none;
+}
+  
+.heading > button:hover .fav i:nth-child(2) {
+    display: block;
 }
 
 /* item quantity */
@@ -280,6 +318,7 @@ button:hover span:after {
     border: none;
     text-align: left;
     padding-left: 0%;
+    margin-top: 1.5rem;
 }
 .toggle:hover {
     background-color: inherit;
