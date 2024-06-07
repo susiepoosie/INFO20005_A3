@@ -63,7 +63,7 @@ function saveItemInfo() {
     const product_color = document.getElementById("colours").value;
     const product_size = document.getElementById("sizes").value;
     const product_quantity = document.querySelector(".quantity").querySelector(".input-box").value;
-    const product_img_url = `../images/Belt_Tip_${product_color}.png`;
+    const product_img_url = `images/Belt_Tip_${product_color}.png`;
 
 
     var product_info = {
