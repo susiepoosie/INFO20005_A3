@@ -15,8 +15,6 @@ function stickyNav() {
   }
 }
 
-// search bar suggestions
-
 // toggle open headings
 
 function toggleOpen() {

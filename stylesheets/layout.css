@@ -106,7 +106,7 @@ h1 {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin: 2em;
+    margin: 4rem;
 }
 
 .centred > h1 {
@@ -128,7 +128,7 @@ h1 {
 }
 
 /* contact us form */
-.contact {
+#contact {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,7 +147,7 @@ form > div input, textarea {
 
 .column > input {background-color: #F0EEED;}
 
-.contact > label {padding-bottom: 2rem;}
+#contact > label {padding-bottom: 2rem;}
 
 form > input::placeholder {
     color: #9D968C;
@@ -186,6 +186,21 @@ section .mosaic {
     max-width: fit-content;
 }
 
+/*  rollover image styles  */
+.card img.second {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .card:hover img.second {
+    opacity: 1;
+  }
+
 @media screen and (max-width: 899px) {
     .mosaic {
         display: grid;
@@ -193,12 +208,6 @@ section .mosaic {
         padding-left: 1rem;
         padding-right: 1rem;
         grid-template-columns: 50% 50%;
-    }
-    .column1 {
-        grid-area: 1 / 1 / 2 / 2;
-    }
-    .column2 {
-        grid-area: 1 / 2 / 2 / 3;
     }
 }
 
@@ -304,6 +313,13 @@ ul.breadcrumb li a {
 ul.breadcrumb li a:hover {
     color: #9D968C;
     text-decoration: underline;
+}
+
+/* browse buttons bar */
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 /* FOOTER */
