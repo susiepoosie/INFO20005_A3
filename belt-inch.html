@@ -1,1 +1,150 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy 1.5 Inch Belt Online in Australia | AWL Leather</title>
+    <link rel="icon" type="image/x-icon" href="images/awl_favicon.png">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/buttons.css">
+    <link rel="stylesheet" href="stylesheets/typography.css">
+    <link rel="stylesheet" href="stylesheets/visuals.css">
+    <script src="scripts/script.js"></script>
+</head>
+<body>
+    <div id="topnav" class="topnav">
+        <!-- company logo -->
+        <a href="index.html"> <logo>AWL</logo></a>
+
+        <!-- dropdown menu -->
+        <div class="dropdown">
+            <button class="dropbtn">MENU +</button>
+            <div class="dropdown-content">
+                <a href="#">About +</a>
+                <a href="browse-all.html">Shop +</a>
+                <a href="index.html#contact">Contact Us</a>
+                <a href="#">My Account</a>
+            </div>
+        </div>
+        <!-- search bar -->
+        <div class="search">
+            <a class="magnify"> <i class="fi fi-rs-search"></i></a>
+            <form>
+                <input type="text" placeholder="Search.." id="searchInput" class="dropbtn">
+            </form>
+            <a class="clear" onclick="document.getElementById('searchInput').value = ''"><i class="fi fi-rs-cross-small"></i></a>
+        </div>
+        <!-- nav buttons -->
+        <div class="split">
+            <a href="#"><i class="fi fi-rs-heart"></i></a>
+            <a href="cart.html"><i class="fi fi-rs-shopping-cart"></i></a>  
+        </div>
+    </div>
+
+    <ul class="breadcrumb">
+        <li> <a href="index.html">Home</a></li>
+        <li> <a href="browse-belts.html">Belts</a></li>
+        <li>1.5" Belt</li>
+    </ul>
+    <div class="centred">
+        <div class="heading">
+            <h1>1.5" BELT</h1>
+            <button class="fav">
+                <i class="fi fi-rs-heart"></i>
+                <i class="fi fi-ss-heart"></i>
+            </button>
+        </div>
+        <p>Australian handmade 40mm solid cowhide belt with nickel buckle and stitched border.</p>
+        <h2>$65</h2>
+    </div>
+    <div class="grid">
+        <div class="container">
+            <img src="images/Belt_1.5inch_Brown.png" class="large">
+        </div>
+        <div class="sidebar">
+            <img src="images/Belt_1.5inch_Brown.png">
+            <img src="images/Belt_1.5inch_Black.png">
+            <img src="images/Belt_1.5inch_Mhog.png">
+            <img src="images/Belt_1.5inch_Tan.png">
+        </div>
+        <div class="product">
+            <button class="dropbtn">
+                <label for="colours">COLOUR:</label>
+                <select name="colours" id="colours">
+                    <option value="default">-- Select</option>
+                    <option value="black">Black</option>
+                    <option value="brown">Brown</option>
+                    <option value="mhog">Mahogany</option>
+                    <option value="tan">Tan</option>
+                </select>
+            </button><br>
+            <button class="dropbtn">
+                <label for="sizes">SIZE:</label>
+                <select name="sizes" id="sizes">
+                    <option value="default">-- Select</option>
+                    <option value="30">30"</option>
+                    <option value="32">32"</option>
+                    <option value="34">34"</option>
+                    <option value="36">36"</option>
+                    <option value="38">38"</option>
+                    <option value="40">40"</option>
+                    <option value="42">42"</option>
+                    <option value="44">44"</option>
+                    <option value="46">46"</option>
+                </select>
+            </button><br>
+            <div class="quantity">
+                <button class="minus" aria-label="Decrease"><i class="fi fi-bs-minus"></i></button>
+                <input type="number" class="input-box" value="1" min="1" max="10">
+                <button class="plus" aria-label="Increase"><i class="fi fi-bs-plus"></i></button>
+            </div>
+            <button>Add to Cart</button>
+        </div>
+        <div class="toggles">
+            <!-- toggle open text 1 -->
+            <div>
+                <button onclick="toggleOpen()" class="toggle">FEATURES<i class="fi fi-rs-angle-small-down"></i></button>
+                <div id="desc">
+                    <ul>
+                        <li>40mm solid cowhide leather</li>
+                        <li>Rust-free nickel buckle & contrast-stitched border design</li>
+                        <li>4 classy colours</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- toggle open text 1 -->
+            <div>
+                <button onclick="toggleOpen2()" class="toggle">SPECIFICATIONS <i class="fi fi-rs-angle-small-down"></i></button>
+                <div id="specs">
+                    <ul>
+                        <li>Available colours: Black, Brown, Mahogany, Tan</li>
+                        <li>Available sizes (inches): 30, 32, 34, 36, 38, 40, 42, 44, 46</li>
+                        <li>Materials: Cowhide leather, rust-free nickel</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    
+    <div class="footer">
+        <logo id="watermark">AWL</logo>    
+        <div class="column" id="links">
+            <h3>QUICK LINKS</h3>
+            <a href="index.html">Home</a><br>
+            <a href="#">About</a><br>
+            <a href="browse-all.html">Shop</a><br>
+            <a href="#">Wishlist</a><br>
+            <a href="#">My Account</a><br>
+        </div>
+       <div class="column">
+            <h3>CONTACT US</h3>
+            <p><i class="fi fi-ss-phone-call"></i> (02) 6655 2260</p>
+            <p><i class="fi fi-ss-envelope"></i> awlbruce1@gmail.com</p>
+            <p><i class="fi fi-ss-marker"></i> 54 Hyde St, Bellingen NSW, Australia 2454</p>
+       </div>
+    </div>
+    <script src="scripts/save-product.js"></script>
+</body>
+</html>
