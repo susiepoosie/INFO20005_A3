@@ -62,15 +62,16 @@ persistent volume, or the collection is lost when the server restarts.
 | `js/display.js` | The display screen, with live updates over server-sent events. |
 | `js/labels.js` | Specimen label wording and the suggested Latin species name. |
 | `js/vendor/qrcode.mjs` | [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (MIT). |
+| `server.js` | Serves the pages and the API: `GET`/`POST /api/specimens`, `DELETE /api/specimens/:id`, `GET /api/events`, `GET /api/info`. |
+
+
+"Left" and "right" are as seen in the photograph, which matches the wings as seen on the display.
 
 ## Credits
 
 The butterfly templates are adapted from the *Butterfly Collection* illustrations designed
 by [Freepik](https://www.freepik.com). Freepik's free licence requires this attribution,
 which is also shown on both pages.
-| `server.js` | Serves the pages and the API: `GET`/`POST /api/specimens`, `DELETE /api/specimens/:id`, `GET /api/events`, `GET /api/info`. |
-
-"Left" and "right" are as seen in the photograph, which matches the wings as seen on the display.
 
 ## Privacy
 
