@@ -1,19 +1,14 @@
+/* Butterfly Archive: flat, black-and-white museum styling shared by the display and mounting pages. */
+
 :root {
-    --wall: #1f2a24;
-    --wall-deep: #141c18;
-    --wood: #5a3420;
-    --wood-light: #7b4a2c;
-    --wood-dark: #3a2013;
-    --linen: #efe5cf;
-    --linen-shadow: #ddd0b2;
-    --paper: #f8f1df;
-    --ink: #2a1d12;
-    --ink-soft: #5d4a37;
-    --brass: #c9a55a;
-    --brass-dark: #8f6f2e;
-    --danger: #8b2a1d;
-    --serif: 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
-    --mono: 'Courier Prime', 'Courier New', monospace;
+    --bg: #f1f2f2;
+    --card: #ffffff;
+    --ink: #161616;
+    --ink-soft: #555;
+    --ink-faint: #8a8a8a;
+    --rule: rgba(0, 0, 0, 0.1);
+    --danger: #a32020;
+    --sans: 'Jost', 'Futura', 'Helvetica Neue', Arial, sans-serif;
 }
 
 *,
@@ -22,18 +17,21 @@
     box-sizing: border-box;
 }
 
-html {
-    background: var(--wall-deep);
-}
-
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: var(--serif);
-    color: var(--linen);
-    background:
-        radial-gradient(ellipse at 50% 0%, rgba(255, 236, 190, 0.12), transparent 60%),
-        linear-gradient(var(--wall), var(--wall-deep));
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2 {
+    font-weight: 500;
+    line-height: 1.2;
 }
 
 .visually-hidden {
@@ -45,76 +43,39 @@ body {
     white-space: nowrap;
 }
 
-/* ---- Masthead ---------------------------------------------------------- */
-
-.masthead {
-    text-align: center;
-    padding: 56px 16px 32px;
-}
-
-.eyebrow {
-    margin: 0 0 8px;
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--brass);
-}
-
-.masthead h1 {
-    margin: 0;
-    font-weight: 500;
-    font-size: clamp(2.4rem, 6vw, 4.2rem);
-    letter-spacing: 0.04em;
-}
-
-.subtitle {
-    margin: 8px auto 28px;
-    max-width: 36em;
-    font-size: 1.25rem;
-    color: #d8ccb2;
-}
-
-/* ---- Buttons ------------------------------------------------------------ */
+/* ---- Buttons --------------------------------------------------------------- */
 
 .btn {
-    display: inline-block;
-    padding: 10px 22px;
-    border: 1px solid var(--ink-soft);
-    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 24px;
+    border: 1px solid var(--ink);
+    border-radius: 0;
     background: transparent;
     color: var(--ink);
-    font: 600 1.05rem var(--serif);
-    letter-spacing: 0.04em;
-    text-decoration: none;
+    font: 500 0.95rem var(--sans);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     cursor: pointer;
 }
 
 .btn:hover {
-    background: rgba(42, 29, 18, 0.08);
-}
-
-.btn:focus-visible,
-.btn-icon:focus-visible,
-.specimen-button:focus-visible,
-.dropzone:focus-within {
-    outline: 3px solid var(--brass);
-    outline-offset: 3px;
+    background: rgba(0, 0, 0, 0.04);
 }
 
 .btn-primary {
-    border-color: var(--brass-dark);
-    background: linear-gradient(#e2c47d, var(--brass) 55%, #b18d43);
-    color: var(--ink);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 2px 6px rgba(0, 0, 0, 0.35);
+    background: var(--ink);
+    color: #fff;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(#ebd08f, #d4b166 55%, #bb9850);
+    background: #333;
 }
 
-.btn-primary:disabled {
-    opacity: 0.6;
+.btn:disabled {
+    opacity: 0.5;
     cursor: progress;
 }
 
@@ -124,10 +85,9 @@ body {
 }
 
 .btn-icon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border: 0;
-    border-radius: 50%;
     background: transparent;
     color: var(--ink);
     font-size: 1.8rem;
@@ -135,112 +95,173 @@ body {
     cursor: pointer;
 }
 
-/* ---- Display case ------------------------------------------------------- */
-
-main {
-    padding: 40px 16px 48px;
+.btn:focus-visible,
+.btn-icon:focus-visible,
+.specimen-button:focus-visible,
+.photo:focus-within {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
 }
 
-.case {
-    position: relative;
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 22px;
-    border-radius: 4px;
-    background:
-        repeating-linear-gradient(92deg, rgba(0, 0, 0, 0.08) 0 2px, transparent 2px 9px),
-        linear-gradient(var(--wood-light), var(--wood) 40%, var(--wood-dark));
-    box-shadow:
-        inset 0 1px 0 rgba(255, 220, 180, 0.25),
-        inset 0 0 0 6px rgba(0, 0, 0, 0.15),
-        0 30px 60px rgba(0, 0, 0, 0.55);
+/* ---- Labels (shared) ------------------------------------------------------- */
+
+.label {
+    padding: 16px 18px 18px;
+    background: var(--card);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px -12px rgba(0, 0, 0, 0.12);
+    text-align: left;
 }
 
-.case-plaque {
-    position: relative;
-    z-index: 2;
-    width: max-content;
-    max-width: 100%;
-    margin: -44px auto 18px;
-    padding: 8px 28px 6px;
-    border-radius: 3px;
-    text-align: center;
-    color: var(--ink);
-    background: linear-gradient(#e7cd8c, var(--brass) 50%, #a9873f);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 3px 8px rgba(0, 0, 0, 0.45);
-}
-
-.case-plaque h2 {
+.label p,
+.label h2 {
     margin: 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
 }
 
-.case-plaque p {
-    margin: 0;
-    font-family: var(--mono);
-    font-size: 0.8rem;
+.label-number {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
 }
 
-.board {
-    position: relative;
-    min-height: 420px;
-    padding: 40px 28px 48px;
-    background:
-        repeating-linear-gradient(0deg, rgba(120, 95, 50, 0.05) 0 1px, transparent 1px 3px),
-        repeating-linear-gradient(90deg, rgba(120, 95, 50, 0.05) 0 1px, transparent 1px 3px),
-        radial-gradient(ellipse at 50% 40%, var(--linen), var(--linen-shadow));
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), inset 0 10px 30px rgba(0, 0, 0, 0.35);
-    overflow: hidden;
-}
-
-/* Glass front */
-.board::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-        linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.16) 38%, transparent 46%),
-        linear-gradient(115deg, transparent 52%, rgba(255, 255, 255, 0.08) 56%, transparent 60%);
-}
-
-.board-empty {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    margin: 0;
-    padding: 24px;
-    text-align: center;
+.label-species {
+    margin-top: 2px;
+    font-size: 1rem;
+    font-weight: 500;
     font-style: italic;
-    font-size: 1.3rem;
-    color: var(--ink-soft);
+    overflow-wrap: anywhere;
 }
 
-.board-empty[hidden] {
-    display: none;
+.label-details {
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    overflow-wrap: anywhere;
+}
+
+.label-text {
+    margin-top: 8px;
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--ink-faint);
+}
+
+/* ---- Display --------------------------------------------------------------- */
+
+.display {
+    background:
+        linear-gradient(180deg, #fafafa 0%, var(--bg) 40%);
+    background-color: var(--bg);
+}
+
+.collection {
+    max-width: 1680px;
+    margin: 0 auto;
+    padding: clamp(24px, 4vw, 64px);
 }
 
 .specimens {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 40px 28px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: clamp(40px, 5vw, 80px) clamp(24px, 3vw, 48px);
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+.intro {
+    grid-column: span 2;
+}
+
+.intro-panel {
+    height: 100%;
+    padding: clamp(24px, 3vw, 40px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 30px 40px -28px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.intro-panel h1 {
+    margin: 0;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.intro-lede {
+    margin: 6px 0 18px;
+    font-size: 1.05rem;
+}
+
+.intro-body {
+    max-width: 40em;
+    margin: 0 0 24px;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+}
+
+.intro-qr {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.qr {
+    flex: none;
+    width: 132px;
+    height: 132px;
+    padding: 10px;
+    background: #fff;
+}
+
+.qr svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.qr-title,
+.qr-body,
+.qr-url {
+    margin: 0;
+}
+
+.qr-title {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.qr-body {
+    margin-top: 4px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+}
+
+.qr-url {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    overflow-wrap: anywhere;
+}
+
+.intro-count {
+    margin: 24px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
 }
 
 .specimen {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: clamp(20px, 3vw, 40px);
 }
 
 .specimen-button {
-    position: relative;
     display: block;
     width: 100%;
     padding: 0;
@@ -253,353 +274,293 @@ main {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 900 / 700;
-    transform: rotate(var(--tilt, 0deg));
-    filter: drop-shadow(4px 10px 6px rgba(40, 25, 10, 0.35));
-    transition: transform 0.3s ease, filter 0.3s ease;
+    aspect-ratio: 1000 / 900;
+    filter: drop-shadow(0 26px 14px rgba(0, 0, 0, 0.16));
 }
 
-.specimen-button:hover .specimen-image {
-    transform: rotate(var(--tilt, 0deg)) translateY(-3px) scale(1.03);
-    filter: drop-shadow(6px 16px 10px rgba(40, 25, 10, 0.3));
+.specimen .label {
+    width: 100%;
 }
 
-/* Entomological pin through the thorax: head, then a shadow cast onto the board. */
-.pin {
-    position: absolute;
-    left: 50%;
-    top: calc(38.9% - 5.5px);
-    width: 11px;
-    height: 11px;
-    margin-left: -5.5px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #fff 0 8%, #4d4d55 30%, #111 80%);
-    box-shadow: 7px 9px 3px -2px rgba(30, 20, 10, 0.35);
-}
-
-.specimen-label {
-    width: min(100%, 190px);
-    margin-top: 6px;
-    padding: 6px 10px 7px;
-    border: 1px solid rgba(60, 40, 20, 0.25);
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    line-height: 1.35;
-    box-shadow: 1px 2px 3px rgba(40, 25, 10, 0.2);
-}
-
-.specimen-label p {
-    margin: 0;
-}
-
-.label-number {
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    color: var(--ink-soft);
-}
-
-.label-species {
-    font-style: italic;
-    font-weight: 700;
-    overflow-wrap: anywhere;
-}
-
-.label-collector {
-    overflow-wrap: anywhere;
-}
-
-/* A newly mounted specimen settles onto the board, then the pin goes in. */
+/* A newly mounted specimen settles into the case. */
 .specimen.arriving .specimen-image {
-    animation: settle 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation: settle 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
-.specimen.arriving .specimen-label {
-    animation: fade-in 0.6s 1s both;
-}
-
-.specimen.arriving .pin {
-    animation: pin-in 0.45s 1.05s cubic-bezier(0.5, 0, 0.8, 0.4) both;
+.specimen.arriving .label {
+    animation: fade-in 0.8s 0.9s both;
 }
 
 @keyframes settle {
     from {
         opacity: 0;
-        transform: translateY(-120px) scale(1.6) rotate(-14deg);
-        filter: drop-shadow(30px 60px 24px rgba(40, 25, 10, 0.2));
-    }
-}
-
-@keyframes pin-in {
-    from {
-        opacity: 0;
-        transform: translateY(-70px) scale(1.8);
-        box-shadow: 30px 40px 8px -2px rgba(30, 20, 10, 0.15);
+        transform: translateY(-40px) scale(1.08);
+        filter: drop-shadow(0 60px 30px rgba(0, 0, 0, 0.08));
     }
 }
 
 @keyframes fade-in {
     from {
         opacity: 0;
-        transform: translateY(6px);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .specimen.arriving .specimen-image,
-    .specimen.arriving .specimen-label,
-    .specimen.arriving .pin {
+    .specimen.arriving .label {
         animation: none;
     }
 }
 
-/* ---- Dialogs ------------------------------------------------------------ */
+@media (max-width: 640px) {
+    .intro {
+        grid-column: auto;
+    }
+
+    .intro-qr {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ---- Dialog ---------------------------------------------------------------- */
 
 dialog {
-    width: min(960px, calc(100% - 24px));
+    width: min(860px, calc(100% - 24px));
     max-height: calc(100% - 24px);
-    padding: 28px 32px 32px;
+    padding: 32px;
     border: 0;
-    border-radius: 4px;
-    background:
-        repeating-linear-gradient(0deg, rgba(120, 95, 50, 0.04) 0 1px, transparent 1px 3px),
-        var(--paper);
+    background: var(--bg);
     color: var(--ink);
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    text-align: center;
 }
 
 dialog::backdrop {
-    background: rgba(10, 14, 12, 0.75);
+    background: rgba(240, 241, 241, 0.92);
 }
 
-dialog h2 {
-    margin: 0 0 6px;
-    font-weight: 500;
-    font-size: 2rem;
-}
-
-.bench-close {
+.dialog-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 8px;
     margin: 0;
-}
-
-.bench-intro {
-    max-width: 44em;
-    margin: 0 0 20px;
-    font-size: 1.1rem;
-    color: var(--ink-soft);
-}
-
-.plates {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.plate h3,
-.label-form h3 {
-    margin: 0 0 8px;
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-}
-
-.dropzone {
-    position: relative;
-    display: grid;
-    place-items: center;
-    aspect-ratio: 4 / 5;
-    border: 2px dashed rgba(60, 40, 20, 0.35);
-    border-radius: 3px;
-    background: rgba(60, 40, 20, 0.04);
-    cursor: pointer;
-    overflow: hidden;
-}
-
-.dropzone:hover,
-.dropzone.dragging {
-    border-color: var(--brass-dark);
-    background: rgba(201, 165, 90, 0.12);
-}
-
-.dropzone-empty {
-    padding: 16px;
-    text-align: center;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--ink-soft);
-}
-
-.dropzone-empty[hidden],
-.dropzone-preview[hidden] {
-    display: none;
-}
-
-.dropzone-preview {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.plate-status {
-    min-height: 1.4em;
-    margin: 6px 0 0;
-    font-family: var(--mono);
-    font-size: 0.8rem;
-}
-
-.plate[data-state='busy'] .plate-status {
-    color: var(--ink-soft);
-}
-
-.plate[data-state='error'] .plate-status {
-    color: var(--danger);
-}
-
-.plate[data-state='ok'] .plate-status::before {
-    content: '\2713  ';
-}
-
-.preparation {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 24px;
-    align-items: start;
-    margin-top: 28px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(60, 40, 20, 0.2);
-}
-
-.preparation[hidden] {
-    display: none;
-}
-
-.preparation-specimen {
-    padding: 16px;
-    background: radial-gradient(ellipse at 50% 40%, var(--linen), var(--linen-shadow));
-    box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.2);
-}
-
-.preparation-specimen img {
-    display: block;
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(4px 10px 6px rgba(40, 25, 10, 0.35));
-}
-
-.label-form {
-    display: grid;
-    gap: 14px;
-}
-
-.label-form label {
-    display: grid;
-    gap: 4px;
-    font-weight: 600;
-}
-
-.optional {
-    font-weight: 400;
-    color: var(--ink-soft);
-}
-
-.label-form input {
-    padding: 8px 10px;
-    border: 1px solid rgba(60, 40, 20, 0.35);
-    border-radius: 2px;
-    background: #fffaf0;
-    color: var(--ink);
-    font: 1rem var(--mono);
-}
-
-.label-form input[name='species'] {
-    font-style: italic;
-}
-
-.label-actions,
-.viewer-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.viewer {
-    width: min(820px, calc(100% - 24px));
-    text-align: center;
 }
 
 .viewer > img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 900 / 700;
-    margin: 12px 0 8px;
-    filter: drop-shadow(4px 12px 8px rgba(40, 25, 10, 0.35));
+    aspect-ratio: 1000 / 900;
+    filter: drop-shadow(0 26px 14px rgba(0, 0, 0, 0.16));
 }
 
-.specimen-label-large {
+.label-large {
     display: inline-block;
-    width: auto;
-    min-width: 260px;
-    margin: 0 auto 20px;
-    padding: 10px 18px;
-    font-size: 0.9rem;
-    text-align: left;
+    max-width: 520px;
+    margin-top: 24px;
 }
 
-.specimen-label-large h2 {
-    font-family: var(--mono);
-    font-size: 1.2rem;
+.label-large .label-species {
+    font-size: 1.3rem;
 }
 
 .viewer-actions {
-    justify-content: center;
+    margin-top: 20px;
 }
 
-/* ---- Footer ------------------------------------------------------------- */
+/* ---- Mounting page (phone) --------------------------------------------------- */
 
-.colophon {
-    padding: 0 16px 40px;
+.mount {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.mount-header {
+    padding: 40px 0 8px;
+}
+
+.eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.mount-header h1 {
+    margin: 4px 0 12px;
+    font-size: 2rem;
+}
+
+.mount-intro {
+    margin: 0;
+    color: var(--ink-soft);
+}
+
+.step {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.step[hidden],
+.done[hidden],
+#bench[hidden] {
+    display: none;
+}
+
+.step h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.step-number {
+    margin-right: 8px;
+    font-weight: 300;
+    color: var(--ink-faint);
+}
+
+.step-hint {
+    margin: 4px 0 14px;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+}
+
+.photo {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    max-height: 70vh;
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px var(--rule);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.photo-empty {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 24px;
+    border: 1px solid var(--ink);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+}
+
+.photo-empty[hidden],
+.photo-preview[hidden] {
+    display: none;
+}
+
+.photo-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.step-status {
+    min-height: 1.5em;
+    margin: 10px 0 0;
+    font-size: 0.9rem;
+}
+
+.step[data-state='busy'] .step-status {
+    color: var(--ink-faint);
+}
+
+.step[data-state='error'] .step-status {
+    color: var(--danger);
+}
+
+.step[data-state='ok'] .step-status::before {
+    content: '\2713\00a0';
+}
+
+.preview-specimen {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1000 / 900;
+    margin: 12px 0 20px;
+    filter: drop-shadow(0 20px 12px rgba(0, 0, 0, 0.16));
+}
+
+.label-form {
+    display: grid;
+    gap: 16px;
+}
+
+.label-form label {
+    display: grid;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.optional {
+    font-weight: 400;
+    text-transform: none;
+    color: var(--ink-faint);
+}
+
+.label-form input {
+    min-height: 48px;
+    padding: 0 12px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 0;
+    background: var(--card);
+    color: var(--ink);
+    font: 400 1rem var(--sans);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.label-form input:focus {
+    outline: 2px solid var(--ink);
+    outline-offset: -1px;
+}
+
+.label-form input[name='species'] {
+    font-style: italic;
+}
+
+.form-error {
+    min-height: 0;
+    margin: 0;
+    color: var(--danger);
+    font-size: 0.9rem;
+}
+
+.form-error:empty {
+    display: none;
+}
+
+.done {
+    padding: 28px 0 40px;
     text-align: center;
-    font-size: 1rem;
-    color: #a99f8a;
 }
 
-/* ---- Small screens ------------------------------------------------------ */
+.done h2 {
+    margin: 4px 0 8px;
+    font-size: 1.6rem;
+}
 
-@media (max-width: 680px) {
-    .masthead {
-        padding-top: 36px;
-    }
+.done p {
+    margin: 0 0 24px;
+    color: var(--ink-soft);
+}
 
-    .case {
-        padding: 12px;
-    }
+.done .label-number {
+    margin: 0;
+}
 
-    .board {
-        padding: 32px 12px 36px;
-    }
-
-    .specimens {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 28px 12px;
-    }
-
-    dialog {
-        padding: 20px 16px 24px;
-    }
-
-    .plates,
-    .preparation {
-        grid-template-columns: 1fr;
-    }
-
-    .plates {
-        gap: 12px;
-    }
+.mount-footer {
+    padding: 24px 0 40px;
+    font-size: 0.8rem;
+    color: var(--ink-faint);
 }

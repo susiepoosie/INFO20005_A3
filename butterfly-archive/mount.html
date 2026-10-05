@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mount a Specimen · Butterfly Archive</title>
+    <meta name="description" content="Make a butterfly from your face and your mother's, and pin it to the Butterfly Archive.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap">
+    <link rel="stylesheet" href="css/archive.css">
+    <script type="module" src="js/mount.js"></script>
+</head>
+<body class="mount">
+    <header class="mount-header">
+        <p class="eyebrow">The Butterfly Archive</p>
+        <h1>Mount a specimen</h1>
+        <p class="mount-intro">Two photographs make one butterfly. Half of your mother's face becomes the left wing, and half of yours becomes the right. What remains is laid together to form the body.</p>
+    </header>
+
+    <main id="bench">
+        <section class="step" data-role="mother" aria-labelledby="step-mother">
+            <h2 id="step-mother"><span class="step-number">01</span> Your mother</h2>
+            <p class="step-hint">A clear photograph of her face, looking at the camera.</p>
+            <label class="photo">
+                <input type="file" accept="image/*" class="visually-hidden" data-role="mother">
+                <span class="photo-empty">Choose photograph</span>
+                <canvas class="photo-preview" hidden></canvas>
+            </label>
+            <p class="step-status" role="status"></p>
+        </section>
+
+        <section class="step" data-role="self" aria-labelledby="step-self">
+            <h2 id="step-self"><span class="step-number">02</span> You</h2>
+            <p class="step-hint">Take a photograph now, or choose one where you face the camera.</p>
+            <label class="photo">
+                <input type="file" accept="image/*" class="visually-hidden" data-role="self">
+                <span class="photo-empty">Choose photograph</span>
+                <canvas class="photo-preview" hidden></canvas>
+            </label>
+            <p class="step-status" role="status"></p>
+        </section>
+
+        <section class="step step-specimen" id="preparation" aria-labelledby="step-specimen" hidden>
+            <h2 id="step-specimen"><span class="step-number">03</span> Your specimen</h2>
+            <img id="preview-specimen" class="preview-specimen" alt="Your butterfly specimen">
+            <form class="label-form" id="label-form">
+                <label>Your name
+                    <input type="text" name="collector" maxlength="40" autocomplete="given-name" required>
+                </label>
+                <label>Species name
+                    <input type="text" name="species" maxlength="60" required>
+                </label>
+                <label>Where you grew up <span class="optional">(optional)</span>
+                    <input type="text" name="locality" maxlength="60">
+                </label>
+                <p class="form-error" id="form-error" role="alert"></p>
+                <button type="submit" class="btn btn-primary">Pin to the display</button>
+                <button type="button" class="btn" id="reset-bench">Start over</button>
+            </form>
+        </section>
+    </main>
+
+    <section class="done" id="done" hidden aria-live="polite">
+        <img id="done-specimen" class="preview-specimen" alt="Your butterfly specimen">
+        <p class="label-number" id="done-number"></p>
+        <h2>Pinned to the display</h2>
+        <p>Look up: your specimen has joined the collection.</p>
+        <button type="button" class="btn" id="mount-another">Mount another</button>
+    </section>
+
+    <footer class="mount-footer">
+        <p>Your photographs are processed on this phone and are never uploaded. Only the finished butterfly and its label are shared with the display.</p>
+    </footer>
+</body>
+</html>

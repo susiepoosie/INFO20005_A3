@@ -1,0 +1,13 @@
+{
+  "name": "butterfly-archive",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An entomological archive of butterflies made from the faces of mothers and their children.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

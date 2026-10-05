@@ -1,63 +1,53 @@
-// Composes a butterfly specimen from two aligned faces (see faces.js).
+// Composes a black-and-white, stippled swallowtail specimen from two aligned faces (see faces.js).
 //   left wing  ← left half of the mother's face
 //   right wing ← right half of the user's face
-//   body       ← the two remaining halves merged into one face
-// "Left" and "right" are as seen in the photograph, matching the wings as seen on the board.
+//   body       ← the two remaining halves, cross-faded on top of each other
+// "Left" and "right" are as seen in the photograph, matching the wings as seen on the display.
+//
+// Everything is first drawn as a greyscale "tone" image, then turned into ink dots on paper.
 
 import { FACE_W, FACE_H } from './faces.js';
 
-export const SPECIMEN_W = 900;
-export const SPECIMEN_H = 700;
+export const SPECIMEN_W = 1000;
+export const SPECIMEN_H = 900;
 const CX = SPECIMEN_W / 2;
 const HALF = FACE_W / 2;
 
-// Wing outlines for the right-hand side as cubic segments, in coordinates where x is the
-// distance from the body's centre line. The left wing is drawn mirrored.
+const INK = [24, 22, 26];
+const PAPER = [251, 251, 249];
+
+// ---- Geometry ----------------------------------------------------------------
+// Right-hand wings as cubic segments, where x is the distance from the body's centre line.
+// The left wings are the same shapes mirrored.
+
 const FOREWING = [
-  [14, 215],
-  [[70, 120], [220, 40], [380, 38]],
-  [[420, 38], [432, 70], [418, 100]],
-  [[395, 175], [352, 262], [300, 318]],
-  [[220, 332], [110, 322], [16, 300]],
+  [16, 250],
+  [[70, 160], [240, 70], [430, 52]],
+  [[452, 50], [462, 72], [452, 92]],
+  [[430, 190], [400, 290], [380, 372]],
+  [[260, 380], [120, 350], [18, 320]],
 ];
 const HINDWING = [
-  [16, 300],
-  [[130, 300], [272, 318], [334, 366]],
-  [[380, 406], [364, 482], [324, 532]],
-  [[288, 582], [222, 628], [160, 624]],
-  [[98, 618], [48, 562], [30, 482]],
-  [[20, 422], [14, 360], [16, 300]],
+  [18, 315],
+  [[140, 330], [300, 360], [372, 392]],
+  [[410, 430], [400, 520], [350, 580]],
+  [[322, 612], [300, 630], [284, 650]],
+  [[300, 720], [318, 790], [306, 806]],
+  [[296, 818], [276, 812], [268, 796]],
+  [[256, 740], [248, 700], [236, 668]],
+  [[180, 680], [90, 640], [50, 560]],
+  [[28, 500], [18, 420], [18, 315]],
 ];
-// Segments that form the outer margin, used to place the marginal spots.
+// Segments along the outer edge, where the dark band and its pale spots go.
 const FORE_MARGIN = [2, 3];
 const HIND_MARGIN = [2, 3];
+const HIND_TAIL = [4, 5, 6];
+const FORE_CENTRE = [230, 230];
+const HIND_CENTRE = [200, 500];
 
-// Discal cells and veins, as [from, to] lines.
-const FORE_CELL = [[22, 250], [[110, 196], [195, 172]], [[214, 248]], [[120, 262], [22, 262]]];
-const HIND_CELL = [[24, 318], [[120, 330], [190, 380]], [[170, 440]], [[90, 410], [24, 330]]];
-const VEINS = [
-  [[60, 228], [150, 66]],
-  [[195, 172], [272, 44]],
-  [[198, 182], [362, 40]],
-  [[203, 198], [412, 88]],
-  [[207, 214], [404, 146]],
-  [[211, 232], [372, 212]],
-  [[214, 248], [334, 278]],
-  [[168, 257], [292, 318]],
-  [[40, 262], [222, 326]],
-  [[110, 326], [322, 370]],
-  [[190, 380], [362, 452]],
-  [[186, 398], [334, 524]],
-  [[178, 420], [272, 592]],
-  [[170, 440], [190, 622]],
-  [[132, 428], [112, 606]],
-  [[60, 360], [44, 520]],
-];
-
-// Where each half-face is laid over the wing (local coordinates), and which rows of the
-// aligned face to use, so that an eye lands on the forewing and the mouth on the hindwing.
-const WING_FACE_RECT = { x: 4, y: 30, w: 410, h: 600 };
-const WING_FACE_SRC = { y: 70, h: 570 };
+// Where each half-face sits on the wing (local coordinates) and which rows of the aligned
+// face it uses: an eye lands on the forewing, the mouth on the hindwing.
+const WING_FACE = { src: { y: 60, h: 580 }, dst: { x: 6, y: -53, w: 400, h: 754 } };
 
 function segmentsToPath(segments, path = new Path2D()) {
   const [start, ...curves] = segments;
@@ -67,25 +57,71 @@ function segmentsToPath(segments, path = new Path2D()) {
   return path;
 }
 
-function bezierPoint(p0, [c1, c2, p3], t) {
-  const u = 1 - t;
-  const f = (i) => u * u * u * p0[i] + 3 * u * u * t * c1[i] + 3 * u * t * t * c2[i] + t * t * t * p3[i];
-  return [f(0), f(1)];
-}
+const segmentStart = (segments, i) => (i === 1 ? segments[0] : segments[i - 1][2]);
 
-function marginPoints(segments, indices, perSegment) {
-  const points = [];
+function openPath(segments, indices, path = new Path2D()) {
+  path.moveTo(...segmentStart(segments, indices[0]));
   for (const i of indices) {
-    const p0 = i === 1 ? segments[0] : segments[i - 1][2];
-    for (let k = 0; k < perSegment; k++) points.push(bezierPoint(p0, segments[i], (k + 0.5) / perSegment));
+    const [c1, c2, end] = segments[i];
+    path.bezierCurveTo(...c1, ...c2, ...end);
   }
-  return points;
+  return path;
 }
 
-const WING_PATH = (() => {
-  const path = segmentsToPath(FOREWING);
-  return segmentsToPath(HINDWING, path);
-})();
+// Evenly spaced points along segments, each with a unit normal pointing into the wing.
+function samplePoints(segments, indices, count, centre) {
+  const pts = [];
+  for (const i of indices) {
+    const p0 = segmentStart(segments, i);
+    const [c1, c2, p3] = segments[i];
+    for (let k = 0; k < count; k++) {
+      const t = (k + 0.5) / count;
+      const u = 1 - t;
+      const at = (j) => u * u * u * p0[j] + 3 * u * u * t * c1[j] + 3 * u * t * t * c2[j] + t * t * t * p3[j];
+      const d = (j) => 3 * u * u * (c1[j] - p0[j]) + 6 * u * t * (c2[j] - c1[j]) + 3 * t * t * (p3[j] - c2[j]);
+      const x = at(0);
+      const y = at(1);
+      const len = Math.hypot(d(0), d(1)) || 1;
+      let nx = -d(1) / len;
+      let ny = d(0) / len;
+      if (nx * (centre[0] - x) + ny * (centre[1] - y) < 0) {
+        nx = -nx;
+        ny = -ny;
+      }
+      pts.push({ x, y, nx, ny });
+    }
+  }
+  return pts;
+}
+
+const FORE_PATH = segmentsToPath(FOREWING);
+const HIND_PATH = segmentsToPath(HINDWING);
+
+function bodyPath() {
+  const p = new Path2D();
+  p.moveTo(CX, 228);
+  p.bezierCurveTo(CX + 62, 228, CX + 90, 280, CX + 88, 350);
+  p.bezierCurveTo(CX + 86, 420, CX + 70, 470, CX + 56, 520);
+  p.bezierCurveTo(CX + 44, 580, CX + 22, 650, CX, 684);
+  p.bezierCurveTo(CX - 22, 650, CX - 44, 580, CX - 56, 520);
+  p.bezierCurveTo(CX - 70, 470, CX - 86, 420, CX - 88, 350);
+  p.bezierCurveTo(CX - 90, 280, CX - 62, 228, CX, 228);
+  p.closePath();
+  return p;
+}
+
+function antennae(ctx) {
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 3.5;
+  for (const dir of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(CX + dir * 30, 246);
+    ctx.quadraticCurveTo(CX + dir * 66, 170, CX + dir * 118, 104);
+    ctx.stroke();
+  }
+}
+
+// ---- Canvas helpers ----------------------------------------------------------
 
 function makeCanvas(w, h) {
   const c = document.createElement('canvas');
@@ -94,313 +130,353 @@ function makeCanvas(w, h) {
   return c;
 }
 
-const clamp = (v) => Math.max(0, Math.min(255, v));
-const rgb = ({ r, g, b }, a = 1) => `rgba(${clamp(r) | 0}, ${clamp(g) | 0}, ${clamp(b) | 0}, ${a})`;
-const mix = (a, b, t) => ({ r: a.r + (b.r - a.r) * t, g: a.g + (b.g - a.g) * t, b: a.b + (b.b - a.b) * t });
-const INK = { r: 34, g: 22, b: 14 };
-const PAPER = { r: 236, g: 222, b: 192 };
+const grey = (v) => `rgb(${v | 0}, ${v | 0}, ${v | 0})`;
 
-let grainCanvas = null;
-function grain() {
-  if (!grainCanvas) {
-    grainCanvas = makeCanvas(96, 96);
-    const ctx = grainCanvas.getContext('2d');
-    const img = ctx.createImageData(96, 96);
-    for (let i = 0; i < img.data.length; i += 4) {
-      const v = 150 + Math.random() * 105;
-      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
-      img.data[i + 3] = 255;
-    }
-    ctx.putImageData(img, 0, 0);
-  }
-  return grainCanvas;
-}
+// ---- Faces as tone -----------------------------------------------------------
+// A face becomes a pale engraving: skin goes to paper white, features stay dark,
+// and the edges fade out through the soft face-oval mask.
 
-// The face, cut out with its soft oval mask.
-function maskedFace(face) {
+function toneFace(face) {
   const c = makeCanvas(FACE_W, FACE_H);
-  const ctx = c.getContext('2d');
+  const ctx = c.getContext('2d', { willReadFrequently: true });
   ctx.drawImage(face.canvas, 0, 0);
-  ctx.globalCompositeOperation = 'destination-in';
-  ctx.drawImage(face.mask, 0, 0);
-  return c;
-}
+  const img = ctx.getImageData(0, 0, FACE_W, FACE_H);
+  const px = img.data;
+  const mask = face.mask.getContext('2d').getImageData(0, 0, FACE_W, FACE_H).data;
 
-// One half of a masked face. side: 'left' | 'right' (as seen in the photograph).
-// With `midlineFirst`, the half is flipped if needed so that the facial midline is at x = 0.
-function halfFace(masked, side, { midlineFirst = false } = {}) {
-  const c = makeCanvas(HALF, FACE_H);
-  const ctx = c.getContext('2d');
-  const sx = side === 'left' ? 0 : HALF;
-  if (midlineFirst && side === 'left') {
-    ctx.translate(HALF, 0);
-    ctx.scale(-1, 1);
+  const lum = new Float32Array(FACE_W * FACE_H);
+  const inside = [];
+  for (let i = 0, j = 0; i < px.length; i += 4, j++) {
+    lum[j] = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2];
+    if (mask[i + 3] > 200 && (j & 3) === 0) inside.push(lum[j]);
   }
-  ctx.drawImage(masked, sx, 0, HALF, FACE_H, 0, 0, HALF, FACE_H);
-  return c;
-}
+  inside.sort((a, b) => a - b);
+  const pct = (p) => inside[Math.min(inside.length - 1, Math.floor(p * inside.length))] ?? 128;
+  const black = pct(0.02);
+  const white = Math.max(black + 20, pct(0.7));
 
-// Shift a canvas's colours towards a target tone, so two people's skin blends at the seam.
-function shiftTone(canvas, from, to, strength) {
-  const ctx = canvas.getContext('2d');
-  const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const dr = (to.r - from.r) * strength;
-  const dg = (to.g - from.g) * strength;
-  const db = (to.b - from.b) * strength;
-  for (let i = 0; i < img.data.length; i += 4) {
-    img.data[i] += dr;
-    img.data[i + 1] += dg;
-    img.data[i + 2] += db;
+  for (let i = 0, j = 0; i < px.length; i += 4, j++) {
+    const t = Math.min(1, Math.max(0, (lum[j] - black) / (white - black)));
+    const tone = 255 * Math.pow(t, 1.35);
+    const a = mask[i + 3] / 255;
+    px[i] = px[i + 1] = px[i + 2] = 255 - (255 - tone) * a;
+    px[i + 3] = 255;
   }
   ctx.putImageData(img, 0, 0);
-  return canvas;
-}
-
-// The halves that are not used on the wings, joined at the midline with a soft seam:
-// the user's left half beside the mother's right half.
-function mergedFace(mother, self) {
-  const middle = mix(mother.tone, self.tone, 0.5);
-  const motherFace = shiftTone(maskedFace(mother), mother.tone, middle, 0.6);
-  const selfFace = shiftTone(maskedFace(self), self.tone, middle, 0.6);
-
-  const seam = 28;
-  const fade = makeCanvas(FACE_W, FACE_H);
-  const fctx = fade.getContext('2d');
-  fctx.drawImage(selfFace, 0, 0);
-  const g = fctx.createLinearGradient(HALF - seam, 0, HALF + seam, 0);
-  g.addColorStop(0, '#000');
-  g.addColorStop(1, 'rgba(0,0,0,0)');
-  fctx.globalCompositeOperation = 'destination-in';
-  fctx.fillStyle = g;
-  fctx.fillRect(0, 0, FACE_W, FACE_H);
-
-  const c = makeCanvas(FACE_W, FACE_H);
-  const ctx = c.getContext('2d');
-  ctx.drawImage(motherFace, HALF, 0, HALF, FACE_H, HALF, 0, HALF, FACE_H);
-  // Extend the mother's half a little past the midline so the seam blends rather than gaps.
-  ctx.drawImage(motherFace, HALF - seam, 0, seam, FACE_H, HALF - seam, 0, seam, FACE_H);
-  ctx.drawImage(fade, 0, 0);
   return c;
 }
 
-function cellPath([start, curve1, corner, curve2]) {
-  const p = new Path2D();
-  p.moveTo(...start);
-  p.quadraticCurveTo(...curve1[0], ...curve1[1]);
-  p.lineTo(...corner[0]);
-  p.quadraticCurveTo(...curve2[0], ...curve2[1]);
-  p.closePath();
-  return p;
-}
-const CELLS = [cellPath(FORE_CELL), cellPath(HIND_CELL)];
-
-function drawVeins(ctx, color) {
-  ctx.strokeStyle = color;
-  ctx.lineCap = 'round';
-  ctx.lineWidth = 1.8;
-  for (const cell of CELLS) ctx.stroke(cell);
-  for (const [[x0, y0], [x1, y1]] of VEINS) {
-    const bend = 0.08;
-    ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.quadraticCurveTo(
-      (x0 + x1) / 2 - (y1 - y0) * bend,
-      (y0 + y1) / 2 + (x1 - x0) * bend,
-      x1,
-      y1,
-    );
-    ctx.stroke();
+// One half of a toned face, flipped if needed so the facial midline is at x = 0.
+// side: 'left' | 'right' (as seen in the photograph).
+function halfMidlineFirst(toned, side) {
+  const c = makeCanvas(HALF, FACE_H);
+  const ctx = c.getContext('2d');
+  if (side === 'left') {
+    ctx.translate(HALF, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(toned, 0, 0, HALF, FACE_H, 0, 0, HALF, FACE_H);
+  } else {
+    ctx.drawImage(toned, HALF, 0, HALF, FACE_H, 0, 0, HALF, FACE_H);
   }
+  return c;
 }
 
-// The outer edge of the wings only, for the dark marginal band.
-const MARGIN_PATH = (() => {
-  const p = new Path2D();
-  for (const [segments, indices] of [[FOREWING, FORE_MARGIN], [HINDWING, HIND_MARGIN]]) {
-    const first = indices[0];
-    p.moveTo(...(first === 1 ? segments[0] : segments[first - 1][2]));
-    for (const i of indices) {
-      const [c1, c2, end] = segments[i];
-      p.bezierCurveTo(...c1, ...c2, ...end);
-    }
-  }
-  return p;
-})();
-
-// Draw one wing pair in local coordinates (x = distance from the body). The caller sets up mirroring.
-function drawWing(ctx, half, tone) {
-  const ground = mix(mix(tone, INK, 0.55), { r: 120, g: 70, b: 30 }, 0.2);
-  const dark = mix(tone, INK, 0.85);
-
-  ctx.save();
-  ctx.clip(WING_PATH);
-
-  // Ground colour, darker at the base like many real wings.
-  const g = ctx.createRadialGradient(10, 300, 20, 10, 300, 430);
-  g.addColorStop(0, rgb(dark));
-  g.addColorStop(0.35, rgb(ground));
-  g.addColorStop(1, rgb(mix(ground, dark, 0.4)));
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, SPECIMEN_W / 2, SPECIMEN_H);
-
-  // The half face.
-  ctx.save();
-  ctx.filter = 'saturate(0.85) contrast(1.05)';
-  const r = WING_FACE_RECT;
-  ctx.drawImage(half, 0, WING_FACE_SRC.y, HALF, WING_FACE_SRC.h, r.x, r.y, r.w, r.h);
-  ctx.restore();
-
-  // Scales and age.
-  ctx.globalCompositeOperation = 'multiply';
-  ctx.globalAlpha = 0.2;
-  ctx.fillStyle = ctx.createPattern(grain(), 'repeat');
-  ctx.fillRect(0, 0, SPECIMEN_W / 2, SPECIMEN_H);
-  ctx.globalAlpha = 1;
-  ctx.fillStyle = rgb(PAPER, 0.35);
-  ctx.fillRect(0, 0, SPECIMEN_W / 2, SPECIMEN_H);
-
-  drawVeins(ctx, rgb(INK, 0.45));
-  ctx.globalCompositeOperation = 'source-over';
-
-  // Dark marginal band with a row of pale spots.
-  ctx.strokeStyle = rgb(dark, 0.9);
-  ctx.lineWidth = 50;
-  ctx.lineJoin = 'round';
-  ctx.stroke(MARGIN_PATH);
-  ctx.strokeStyle = rgb(dark, 0.45);
-  ctx.lineWidth = 12;
-  ctx.stroke(WING_PATH);
-  ctx.fillStyle = rgb(mix(PAPER, tone, 0.25), 0.85);
-  const centroids = { fore: [210, 190], hind: [180, 440] };
-  const spots = [
-    ...marginPoints(FOREWING, FORE_MARGIN, 4).map((p) => [p, centroids.fore]),
-    ...marginPoints(HINDWING, HIND_MARGIN, 4).map((p) => [p, centroids.hind]),
-  ];
-  for (const [[x, y], [cx, cy]] of spots) {
-    const d = Math.hypot(cx - x, cy - y);
-    ctx.beginPath();
-    ctx.arc(x + ((cx - x) / d) * 12, y + ((cy - y) / d) * 12, 4.5, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.restore();
-
-  ctx.strokeStyle = rgb(INK, 0.9);
-  ctx.lineWidth = 2;
-  ctx.stroke(WING_PATH);
+// The halves left over from the wings (the user's left, the mother's right), laid on top of
+// each other at half strength. Returned with the midline at x = 0, like halfMidlineFirst.
+function crossFadedHalf(motherToned, selfToned) {
+  const c = makeCanvas(HALF, FACE_H);
+  const ctx = c.getContext('2d');
+  ctx.drawImage(halfMidlineFirst(selfToned, 'left'), 0, 0);
+  ctx.globalAlpha = 0.5;
+  ctx.drawImage(halfMidlineFirst(motherToned, 'right'), 0, 0);
+  return c;
 }
 
-function bodyPath() {
-  const p = new Path2D();
-  p.ellipse(CX, 196, 24, 24, 0, 0, Math.PI * 2);
-  p.ellipse(CX, 272, 30, 76, 0, 0, Math.PI * 2);
-  p.ellipse(CX, 446, 21, 126, 0, 0, Math.PI * 2);
-  return p;
-}
+// ---- Drawing the tone image --------------------------------------------------
 
-function drawAntenna(ctx, dir) {
-  ctx.strokeStyle = rgb(INK);
-  ctx.lineWidth = 3;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(CX + dir * 8, 178);
-  ctx.bezierCurveTo(CX + dir * 20, 120, CX + dir * 60, 70, CX + dir * 118, 36);
-  ctx.stroke();
-  ctx.fillStyle = rgb(INK);
-  ctx.beginPath();
-  ctx.ellipse(CX + dir * 121, 34, 9, 5, dir * -0.55, 0, Math.PI * 2);
-  ctx.fill();
-}
-
-function drawBody(ctx, merged, tone) {
-  const path = bodyPath();
-  drawAntenna(ctx, -1);
-  drawAntenna(ctx, 1);
+function drawWingTone(ctx, half) {
+  const path = new Path2D();
+  path.addPath(FORE_PATH);
+  path.addPath(HIND_PATH);
 
   ctx.save();
   ctx.clip(path);
-  ctx.fillStyle = rgb(mix(tone, INK, 0.75));
-  ctx.fillRect(CX - 40, 150, 80, 450);
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, CX, SPECIMEN_H);
 
-  // The merged face, squeezed onto head, thorax and abdomen.
-  ctx.save();
-  ctx.filter = 'saturate(0.85) contrast(1.05)';
-  ctx.drawImage(merged, 40, 60, FACE_W - 80, FACE_H - 60, CX - 34, 168, 68, 360);
-  ctx.restore();
+  const { src, dst } = WING_FACE;
+  ctx.drawImage(half, 0, src.y, HALF, src.h, dst.x, dst.y, dst.w, dst.h);
 
-  // Rounded shading and abdominal segments.
+  // Soft grey dusting at the wing base.
   ctx.globalCompositeOperation = 'multiply';
-  const shade = ctx.createLinearGradient(CX - 30, 0, CX + 30, 0);
-  shade.addColorStop(0, rgb(INK, 0.85));
-  shade.addColorStop(0.3, 'rgba(255,255,255,0)');
-  shade.addColorStop(0.7, 'rgba(255,255,255,0)');
-  shade.addColorStop(1, rgb(INK, 0.85));
-  ctx.fillStyle = shade;
-  ctx.fillRect(CX - 40, 150, 80, 450);
-  ctx.globalAlpha = 0.3;
-  ctx.fillStyle = ctx.createPattern(grain(), 'repeat');
-  ctx.fillRect(CX - 40, 150, 80, 450);
-  ctx.globalAlpha = 1;
-  ctx.strokeStyle = rgb(INK, 0.5);
-  ctx.lineWidth = 2;
-  for (let y = 360; y < 560; y += 22) {
+  const base = ctx.createRadialGradient(0, 300, 0, 0, 300, 170);
+  base.addColorStop(0, grey(150));
+  base.addColorStop(1, grey(255));
+  ctx.fillStyle = base;
+  ctx.fillRect(0, 0, CX, SPECIMEN_H);
+  ctx.globalCompositeOperation = 'source-over';
+
+  drawForewingPattern(ctx);
+  drawHindwingPattern(ctx);
+  ctx.restore();
+}
+
+function drawForewingPattern(ctx) {
+  ctx.save();
+  ctx.clip(FORE_PATH);
+  // Dark outer band, deepest at the apex.
+  ctx.strokeStyle = grey(0);
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = 150;
+  ctx.stroke(openPath(FOREWING, FORE_MARGIN));
+  ctx.lineWidth = 18;
+  ctx.stroke(openPath(FOREWING, [1]));
+
+  ctx.fillStyle = grey(255);
+  // A row of pale oval cells inside the band.
+  for (const p of samplePoints(FOREWING, [3], 6, FORE_CENTRE)) {
+    ctx.save();
+    ctx.translate(p.x + p.nx * 42, p.y + p.ny * 42);
+    ctx.rotate(Math.atan2(p.ny, p.nx));
     ctx.beginPath();
-    ctx.moveTo(CX - 24, y);
-    ctx.quadraticCurveTo(CX, y + 9, CX + 24, y);
+    ctx.ellipse(0, 0, 15, 9, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+  // Comb-like pale notches along the very edge.
+  ctx.strokeStyle = grey(255);
+  ctx.lineWidth = 9;
+  ctx.lineCap = 'butt';
+  for (const p of samplePoints(FOREWING, [3], 11, FORE_CENTRE)) {
+    ctx.beginPath();
+    ctx.moveTo(p.x - p.nx * 4, p.y - p.ny * 4);
+    ctx.lineTo(p.x + p.nx * 18, p.y + p.ny * 18);
     ctx.stroke();
   }
   ctx.restore();
-
-  ctx.strokeStyle = rgb(INK, 0.9);
-  ctx.lineWidth = 2;
-  ctx.stroke(path);
 }
 
+function drawHindwingPattern(ctx) {
+  ctx.save();
+  ctx.clip(HIND_PATH);
+  ctx.strokeStyle = grey(0);
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = 120;
+  ctx.stroke(openPath(HINDWING, HIND_MARGIN));
+  ctx.lineWidth = 80;
+  ctx.stroke(openPath(HINDWING, HIND_TAIL));
+  ctx.lineWidth = 50;
+  ctx.stroke(openPath(HINDWING, [7]));
+
+  ctx.fillStyle = grey(255);
+  // Chain of pale cells inside the band.
+  for (const p of samplePoints(HINDWING, HIND_MARGIN, 4, HIND_CENTRE)) {
+    ctx.save();
+    ctx.translate(p.x + p.nx * 34, p.y + p.ny * 34);
+    ctx.rotate(Math.atan2(p.ny, p.nx));
+    ctx.fillRect(-10, -12, 20, 24);
+    ctx.restore();
+  }
+  // Pale crescents at the scalloped edge.
+  ctx.strokeStyle = grey(255);
+  ctx.lineWidth = 5;
+  for (const p of samplePoints(HINDWING, HIND_MARGIN, 3, HIND_CENTRE)) {
+    const a = Math.atan2(p.ny, p.nx);
+    ctx.beginPath();
+    ctx.arc(p.x + p.nx * 2, p.y + p.ny * 2, 14, a - 1.1, a + 1.1);
+    ctx.stroke();
+  }
+  // A pale streak down the tail.
+  ctx.lineWidth = 6;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(278, 690);
+  ctx.quadraticCurveTo(286, 750, 288, 790);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawBodyTone(ctx, half) {
+  const path = bodyPath();
+  ctx.save();
+  ctx.clip(path);
+  ctx.fillStyle = grey(200);
+  ctx.fillRect(CX - 100, 200, 200, 500);
+
+  // Soften the cut edges of the half face so no hard line shows on the body.
+  const faded = makeCanvas(HALF, FACE_H);
+  const fctx = faded.getContext('2d');
+  fctx.fillStyle = '#fff';
+  fctx.fillRect(0, 0, HALF, FACE_H);
+  const soft = makeCanvas(HALF, FACE_H);
+  const sctx = soft.getContext('2d');
+  sctx.drawImage(half, 0, 0);
+  sctx.globalCompositeOperation = 'destination-in';
+  const g = sctx.createLinearGradient(0, 0, HALF, 0);
+  g.addColorStop(0, 'rgba(0,0,0,0)');
+  g.addColorStop(0.25, '#000');
+  g.addColorStop(0.8, '#000');
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  sctx.fillStyle = g;
+  sctx.fillRect(0, 0, HALF, FACE_H);
+  fctx.drawImage(soft, 0, 0);
+
+  // The cross-faded half face, placed so its single eye sits on the centre line.
+  const sx = 0.8;
+  const sy = 0.8;
+  const eyeFromMidline = 88;
+  const eyeY = 345;
+  ctx.globalCompositeOperation = 'multiply';
+  ctx.save();
+  ctx.translate(CX + eyeFromMidline * sx, eyeY - 270 * sy);
+  ctx.scale(-sx, sy);
+  // Twice, so the features stand out against the body's grey.
+  ctx.drawImage(faded, 0, 0);
+  ctx.drawImage(faded, 0, 0);
+  ctx.restore();
+
+  // Lighter in the middle, darker at the rim, as on a rounded body.
+  ctx.globalCompositeOperation = 'screen';
+  const light = ctx.createRadialGradient(CX, 380, 10, CX, 390, 100);
+  light.addColorStop(0, grey(60));
+  light.addColorStop(1, grey(0));
+  ctx.fillStyle = light;
+  ctx.fillRect(CX - 100, 200, 200, 500);
+  ctx.globalCompositeOperation = 'multiply';
+  const rim = ctx.createRadialGradient(CX, 390, 60, CX, 420, 270);
+  rim.addColorStop(0, grey(255));
+  rim.addColorStop(1, grey(60));
+  ctx.fillStyle = rim;
+  ctx.fillRect(CX - 100, 200, 200, 500);
+  ctx.restore();
+}
+
+// ---- Stippling ---------------------------------------------------------------
+
+let noiseField = null;
+
+// A threshold field mixing fine and slightly clumped noise, so dots cluster like printed grain.
+function thresholds(w, h) {
+  if (noiseField && noiseField.length === w * h) return noiseField;
+  const coarse = makeCanvas(Math.ceil(w / 2), Math.ceil(h / 2));
+  const cctx = coarse.getContext('2d');
+  const cimg = cctx.createImageData(coarse.width, coarse.height);
+  for (let i = 0; i < cimg.data.length; i += 4) {
+    cimg.data[i] = Math.random() * 255;
+    cimg.data[i + 3] = 255;
+  }
+  cctx.putImageData(cimg, 0, 0);
+  const up = makeCanvas(w, h);
+  const uctx = up.getContext('2d', { willReadFrequently: true });
+  uctx.drawImage(coarse, 0, 0, w, h);
+  const smooth = uctx.getImageData(0, 0, w, h).data;
+  noiseField = new Float32Array(w * h);
+  for (let j = 0; j < w * h; j++) {
+    const v = 0.55 * (smooth[j * 4] / 255) + 0.45 * Math.random();
+    // Stretch back towards an even spread after mixing.
+    noiseField[j] = Math.min(1, Math.max(0, (v - 0.5) * 1.45 + 0.5));
+  }
+  return noiseField;
+}
+
+function stipple(tone, silhouette) {
+  const w = tone.width;
+  const h = tone.height;
+  const t = tone.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, w, h).data;
+  const s = silhouette.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, w, h).data;
+  const field = thresholds(w, h);
+  const out = makeCanvas(w, h);
+  const octx = out.getContext('2d');
+  const img = octx.createImageData(w, h);
+  const px = img.data;
+  for (let i = 0, j = 0; i < px.length; i += 4, j++) {
+    const alpha = s[i + 3];
+    if (alpha === 0) continue;
+    const darkness = 1 - t[i] / 255;
+    const c = darkness > 0.97 || darkness > field[j] ? INK : PAPER;
+    px[i] = c[0];
+    px[i + 1] = c[1];
+    px[i + 2] = c[2];
+    px[i + 3] = alpha;
+  }
+  octx.putImageData(img, 0, 0);
+  return out;
+}
+
+// ---- Public API --------------------------------------------------------------
+
 export function renderSpecimen(mother, self) {
-  const canvas = makeCanvas(SPECIMEN_W, SPECIMEN_H);
-  const ctx = canvas.getContext('2d');
+  const motherToned = toneFace(mother);
+  const selfToned = toneFace(self);
+
+  const tone = makeCanvas(SPECIMEN_W, SPECIMEN_H);
+  const ctx = tone.getContext('2d', { willReadFrequently: true });
   ctx.imageSmoothingQuality = 'high';
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, SPECIMEN_W, SPECIMEN_H);
 
-  const motherMasked = maskedFace(mother);
-  const selfMasked = maskedFace(self);
-
-  // Left wing: drawn mirrored, so the half is flipped first to keep the face the right way round.
+  // Left wing: drawn mirrored, with the half pre-flipped so the face keeps its orientation.
   ctx.save();
   ctx.translate(CX, 0);
   ctx.scale(-1, 1);
-  drawWing(ctx, halfFace(motherMasked, 'left', { midlineFirst: true }), mother.tone);
+  drawWingTone(ctx, halfMidlineFirst(motherToned, 'left'));
   ctx.restore();
 
   ctx.save();
   ctx.translate(CX, 0);
-  drawWing(ctx, halfFace(selfMasked, 'right', { midlineFirst: true }), self.tone);
+  drawWingTone(ctx, halfMidlineFirst(selfToned, 'right'));
   ctx.restore();
 
-  drawBody(ctx, mergedFace(mother, self), mix(mother.tone, self.tone, 0.5));
-  return canvas;
+  drawBodyTone(ctx, crossFadedHalf(motherToned, selfToned));
+  ctx.strokeStyle = grey(0);
+  antennae(ctx);
+
+  // Silhouette: wherever there is wing, body or antenna, there is paper.
+  const silhouette = makeCanvas(SPECIMEN_W, SPECIMEN_H);
+  const sctx = silhouette.getContext('2d', { willReadFrequently: true });
+  sctx.fillStyle = '#000';
+  sctx.strokeStyle = '#000';
+  for (const dir of [-1, 1]) {
+    sctx.save();
+    sctx.translate(CX, 0);
+    sctx.scale(dir, 1);
+    sctx.fill(FORE_PATH);
+    sctx.fill(HIND_PATH);
+    sctx.lineWidth = 2;
+    sctx.stroke(FORE_PATH);
+    sctx.stroke(HIND_PATH);
+    sctx.restore();
+  }
+  sctx.fill(bodyPath());
+  antennae(sctx);
+
+  return stipple(tone, silhouette);
 }
 
-// A preview of how a face will be divided, for the upload plates.
+// A preview of how a face will be divided, for the upload steps.
 // role: 'mother' (left half → left wing) or 'self' (right half → right wing).
 export function renderSplitPreview(face, role) {
   const c = makeCanvas(FACE_W, FACE_H);
   const ctx = c.getContext('2d');
+  ctx.filter = 'grayscale(1)';
   ctx.drawImage(face.canvas, 0, 0);
+  ctx.filter = 'none';
   const wingSide = role === 'mother' ? 0 : HALF;
   const bodySide = role === 'mother' ? HALF : 0;
-  ctx.fillStyle = 'rgba(28, 20, 12, 0.55)';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
   ctx.fillRect(bodySide, 0, HALF, FACE_H);
-  ctx.strokeStyle = 'rgba(255, 248, 230, 0.9)';
-  ctx.setLineDash([10, 8]);
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(HALF, 0);
-  ctx.lineTo(HALF, FACE_H);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.font = '600 26px "Courier Prime", monospace';
+  ctx.fillStyle = '#111';
+  ctx.fillRect(HALF - 1.5, 0, 3, FACE_H);
+  ctx.font = '500 22px Jost, "Helvetica Neue", Arial, sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillStyle = 'rgba(255, 248, 230, 0.95)';
-  ctx.fillText(role === 'mother' ? 'LEFT WING' : 'RIGHT WING', wingSide + HALF / 2, FACE_H - 28);
-  ctx.fillText('BODY', bodySide + HALF / 2, FACE_H - 28);
+  const tag = (text, x) => {
+    const w = ctx.measureText(text).width + 24;
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(x - w / 2, FACE_H - 58, w, 36);
+    ctx.fillStyle = '#111';
+    ctx.fillText(text, x, FACE_H - 32);
+  };
+  tag(role === 'mother' ? 'LEFT WING' : 'RIGHT WING', wingSide + HALF / 2);
+  tag('BODY', bodySide + HALF / 2);
   return c;
 }

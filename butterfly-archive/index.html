@@ -7,100 +7,43 @@
     <meta name="description" content="An entomological archive of butterflies made from the faces of mothers and their children.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Courier+Prime:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap">
     <link rel="stylesheet" href="css/archive.css">
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/display.js"></script>
 </head>
-<body>
-    <header class="masthead">
-        <p class="eyebrow">Department of Entomology &middot; Drawer 20005</p>
-        <h1>The Butterfly Archive</h1>
-        <p class="subtitle"><i>Lepidoptera matrilinea</i> &mdash; specimens of inheritance, one wing from each generation.</p>
-        <button type="button" class="btn btn-primary" id="open-bench">Mount a new specimen</button>
-    </header>
-
-    <main>
-        <section class="case" aria-labelledby="case-title">
-            <div class="case-plaque">
-                <h2 id="case-title">Collection</h2>
-                <p id="specimen-count">No specimens yet</p>
-            </div>
-            <div class="board">
-                <ol class="specimens" id="specimens" aria-live="polite"></ol>
-                <p class="board-empty" id="board-empty">This drawer is waiting for its first specimen.</p>
-            </div>
-        </section>
+<body class="display">
+    <main class="collection">
+        <ol class="specimens" id="specimens" aria-live="polite">
+            <li class="intro">
+                <div class="intro-panel">
+                    <h1>The Butterfly Archive</h1>
+                    <p class="intro-lede"><i>Lepidoptera matrilinea</i>: one wing from each generation.</p>
+                    <p class="intro-body">Each specimen in this collection was mounted by a visitor. The left wing is half of their mother's face, and the right wing is half of their own. The two remaining halves are laid over one another to form the body.</p>
+                    <div class="intro-qr">
+                        <div class="qr" id="qr" aria-hidden="true"></div>
+                        <div>
+                            <p class="qr-title">Mount your own specimen</p>
+                            <p class="qr-body">Scan with your phone camera. You will need a photograph of yourself and one of your mother.</p>
+                            <p class="qr-url" id="qr-url"></p>
+                        </div>
+                    </div>
+                    <p class="intro-count" id="specimen-count"></p>
+                </div>
+            </li>
+        </ol>
     </main>
 
-    <footer class="colophon">
-        <p>Photographs are examined on your own device and are never uploaded. Only the finished specimen is kept, in this browser.</p>
-    </footer>
-
-    <!-- Mounting bench: upload two photographs and prepare a specimen -->
-    <dialog class="bench" id="bench" aria-labelledby="bench-title">
-        <form method="dialog" class="bench-close">
-            <button class="btn-icon" aria-label="Close mounting bench">&times;</button>
-        </form>
-        <h2 id="bench-title">Mounting bench</h2>
-        <p class="bench-intro">Provide two photographs. The left half of your mother's face becomes the left wing; the right half of yours becomes the right wing. The halves that remain are joined to form the body.</p>
-
-        <div class="plates">
-            <div class="plate" data-role="mother">
-                <h3>Plate I &middot; Mother</h3>
-                <label class="dropzone">
-                    <input type="file" accept="image/*" class="visually-hidden" data-role="mother">
-                    <span class="dropzone-empty">Choose or drop a photograph</span>
-                    <canvas class="dropzone-preview" hidden></canvas>
-                </label>
-                <p class="plate-status" role="status"></p>
-            </div>
-            <div class="plate" data-role="self">
-                <h3>Plate II &middot; You</h3>
-                <label class="dropzone">
-                    <input type="file" accept="image/*" class="visually-hidden" data-role="self">
-                    <span class="dropzone-empty">Choose or drop a photograph</span>
-                    <canvas class="dropzone-preview" hidden></canvas>
-                </label>
-                <p class="plate-status" role="status"></p>
-            </div>
-        </div>
-
-        <div class="preparation" id="preparation" hidden>
-            <div class="preparation-specimen">
-                <img id="preview-specimen" alt="Your butterfly specimen">
-            </div>
-            <form class="label-form" id="label-form">
-                <h3>Specimen label</h3>
-                <label>Collector
-                    <input type="text" name="collector" maxlength="40" autocomplete="name" required placeholder="Your name">
-                </label>
-                <label>Species
-                    <input type="text" name="species" maxlength="60" required>
-                </label>
-                <label>Locality <span class="optional">(optional)</span>
-                    <input type="text" name="locality" maxlength="60" placeholder="Where you grew up">
-                </label>
-                <div class="label-actions">
-                    <button type="submit" class="btn btn-primary">Pin to the board</button>
-                    <button type="button" class="btn" id="reset-bench">Start over</button>
-                </div>
-            </form>
-        </div>
-    </dialog>
-
-    <!-- Close-up view of one specimen -->
     <dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
-        <form method="dialog" class="bench-close">
+        <form method="dialog" class="dialog-close">
             <button class="btn-icon" aria-label="Close">&times;</button>
         </form>
         <img id="viewer-image" alt="">
-        <div class="specimen-label specimen-label-large">
+        <div class="label label-large">
             <p class="label-number" id="viewer-number"></p>
             <h2 class="label-species" id="viewer-title"></h2>
-            <p id="viewer-details"></p>
+            <p class="label-text" id="viewer-details"></p>
         </div>
-        <div class="viewer-actions">
-            <a class="btn" id="viewer-download" download>Download image</a>
+        <div class="viewer-actions" id="viewer-actions" hidden>
             <button type="button" class="btn btn-danger" id="viewer-remove">Remove from archive</button>
         </div>
     </dialog>
