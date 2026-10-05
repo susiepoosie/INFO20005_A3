@@ -9,7 +9,7 @@ export function labelDetails({ collector, locality, createdAt }) {
 }
 
 export const labelDescription = () =>
-  "Left wing: the collector's mother. Right wing: the collector. Body: the two, superimposed.";
+  "Left wing: the left eye of the collector's mother. Right wing: the collector's right eye. Body: their other eyes, superimposed.";
 
 // A Latin-style species name from the collector's first name, e.g. "Susan" → "Matrilinea susanae".
 export function suggestSpecies(collector) {

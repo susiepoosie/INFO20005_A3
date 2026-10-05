@@ -27,7 +27,7 @@ const MAX_IMAGE = 5 * 1024 * 1024;
 const RATE_LIMIT = { count: 6, windowMs: 10 * 60 * 1000 };
 
 const STATIC_FILES = new Set(['index.html', 'mount.html']);
-const STATIC_DIRS = ['css', 'js'];
+const STATIC_DIRS = ['css', 'js', 'templates'];
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',

@@ -1,7 +1,7 @@
 // The mounting page, opened on a visitor's phone from the display's QR code.
 
 import { loadDetector, loadImage, extractFace } from './faces.js';
-import { renderSpecimen, renderSplitPreview } from './butterfly.js';
+import { preloadTemplates, randomTemplate, renderSpecimen, renderSplitPreview } from './butterfly.js';
 import { catalogueNumber, suggestSpecies } from './labels.js';
 
 const $ = (sel) => document.querySelector(sel);
@@ -68,11 +68,21 @@ function updatePreparation() {
     preparation.hidden = true;
     return;
   }
+  // A new butterfly form, chosen at random, every time the pair of photographs changes.
+  const template = randomTemplate();
   // Let the status text paint before the (blocking) render.
   requestAnimationFrame(() =>
-    setTimeout(() => {
+    setTimeout(async () => {
       if (token !== renderToken) return;
-      const canvas = renderSpecimen(faces.mother, faces.self);
+      let canvas;
+      try {
+        canvas = await renderSpecimen(faces.mother, faces.self, template);
+      } catch (err) {
+        console.error(err);
+        setStatus('self', 'The butterfly could not be prepared. Please try again.', 'error');
+        return;
+      }
+      if (token !== renderToken) return;
       canvas.toBlob(
         (blob) => {
           if (token !== renderToken) return;
@@ -174,3 +184,4 @@ $('#mount-another').addEventListener('click', () => {
 
 // Start downloading the face detector straight away; it takes a few seconds on a phone.
 loadDetector().catch(() => {});
+preloadTemplates().catch(() => {});

@@ -4,12 +4,13 @@ An entomological display of butterflies made from faces. Visitors scan a QR code
 display screen with their phone, upload two photographs (one of themselves and one of their
 mother), and their butterfly is pinned to the shared display.
 
-- The **left half of the mother's face** becomes the **left wing**.
-- The **right half of the visitor's face** becomes the **right wing**.
-- The two remaining halves (the visitor's left, the mother's right) are **cross-faded on top
-  of each other** to form the body, so a single eye sits on its centre line.
+- The **mother's left eye** is placed on the **left wing**.
+- The **visitor's right eye** is placed on the **right wing**.
+- The two remaining eyes (the visitor's left, the mother's right) are **cross-faded on top
+  of each other** and placed on the body.
 
-Butterflies are rendered as black-and-white stippled engravings of a swallowtail.
+Each specimen uses one of six butterfly forms, chosen at random, rendered as a
+black-and-white stippled engraving.
 
 ## Pages
 
@@ -55,11 +56,18 @@ persistent volume, or the collection is lost when the server restarts.
 | File | Role |
 | --- | --- |
 | `js/faces.js` | Detects faces with [MediaPipe Face Landmarker](https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker). It picks the largest face, levels the eyes, centres the facial midline and cuts a soft face-oval mask. |
-| `js/butterfly.js` | Draws the specimen: it turns each face into a pale engraving tone, lays the halves onto the wings and the cross-faded halves onto the body, adds the swallowtail markings, then stipples the result into ink dots. |
+| `js/butterfly.js` | Draws the specimen: it picks a butterfly template, turns each face into a pale engraving tone, cuts out the eyes and places them on the forewings and body, then stipples the result into ink dots. Each template's eye and body positions are listed in `TEMPLATES`. |
+| `templates/*.png` | The six butterfly forms as greyscale tone plus transparency. |
 | `js/mount.js` | The phone mounting page. |
 | `js/display.js` | The display screen, with live updates over server-sent events. |
 | `js/labels.js` | Specimen label wording and the suggested Latin species name. |
 | `js/vendor/qrcode.mjs` | [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (MIT). |
+
+## Credits
+
+The butterfly templates are adapted from the *Butterfly Collection* illustrations designed
+by [Freepik](https://www.freepik.com). Freepik's free licence requires this attribution,
+which is also shown on both pages.
 | `server.js` | Serves the pages and the API: `GET`/`POST /api/specimens`, `DELETE /api/specimens/:id`, `GET /api/events`, `GET /api/info`. |
 
 "Left" and "right" are as seen in the photograph, which matches the wings as seen on the display.

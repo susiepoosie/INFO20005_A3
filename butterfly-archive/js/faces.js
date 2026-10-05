@@ -137,10 +137,17 @@ export async function extractFace(source) {
   const oval = FACE_OVAL.map((i) => matrix.transformPoint(pts[i]));
   const mask = ovalMask(oval);
 
+  // Eye centres in the aligned frame, as seen in the photograph.
+  const eyes = {
+    left: matrix.transformPoint(eyeL),
+    right: matrix.transformPoint(eyeR),
+  };
+
   return {
     canvas,
     mask,
     oval,
+    eyes,
     tone: meanTone(canvas, mask),
     faceCount: faces.length,
   };
